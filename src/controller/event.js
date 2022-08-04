@@ -13,6 +13,7 @@ const createEvent = async (req, res) => {
             endDate,
             imageUrl,
         } = req.body;
+
         const event = await eventRepository.createAndSave({
             title: title.toLowerCase(),
             description,
@@ -45,7 +46,6 @@ const createEvent = async (req, res) => {
 const getAllEvents = async (req, res) => {
     try {
         const { page, limit } = req.query;
-
         const { page: offset, limit: count } = preparePagination(page, limit);
 
         // Fetch all events sorting by the date created which ensures that the latest one come up first
