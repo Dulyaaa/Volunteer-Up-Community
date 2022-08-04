@@ -47,7 +47,7 @@ const createAccount = async (req, res) => {
         if (createUser && typeof createUser === 'number') {
             return res.status(201).send({
                 error: false,
-                message: 'Account succesfully created',
+                message: 'Account successfully created',
                 data: { token },
             });
         }
@@ -66,12 +66,12 @@ const login = async (req, res) => {
         // Get the user details from Redis
         const user = await redisClient.hgetall(`user:${email}`);
 
-        const validaPassword = await compare(password, user.password);
+        const validAPassword = await compare(password, user.password);
 
-        if (!user.email || !validaPassword) {
+        if (!user.email || !validAPassword) {
             return res.status(401).send({
                 error: true,
-                message: 'Invlaid email or password',
+                message: 'Invalid email or password',
             });
         }
 

@@ -61,7 +61,7 @@ const getAllEvents = async (req, res) => {
 
         return res.status(200).send({
             error: false,
-            message: 'Events retrieved successfylly',
+            message: 'Events retrieved successfully',
             data: {
                 allEvents,
                 totalEvents,
@@ -93,7 +93,7 @@ const getEventById = async (req, res) => {
 
         return res.status(200).send({
             error: false,
-            message: 'Event retrieved successfylly',
+            message: 'Event retrieved successfully',
             data: event,
         });
     } catch (error) {
@@ -130,7 +130,7 @@ const getEventsByUserId = async (req, res) => {
 
         return res.status(200).send({
             error: false,
-            message: 'Events retrieved successfylly',
+            message: 'Events retrieved successfully',
             data: {
                 userEvents,
                 totalEvents,
@@ -209,11 +209,11 @@ const searchEvents = async (req, res) => {
         // Determine the search criteria and search events accordingly
         let searchResult;
         if (searchKey && searchKey.toLowerCase() === 'category') {
-            searchResult = await searchBycategory(searchValue.toLowerCase(), offset, count);
+            searchResult = await searchByCategory(searchValue.toLowerCase(), offset, count);
         }
 
         if (searchKey && searchKey.toLowerCase() === 'title') {
-            searchResult = await searchBytitle(searchValue.toLowerCase(), offset, count);
+            searchResult = await searchByTitle(searchValue.toLowerCase(), offset, count);
         }
 
         return res.status(200).send({
@@ -230,7 +230,7 @@ const searchEvents = async (req, res) => {
 };
 
 // Search events by category
-const searchBycategory = async (category, offset, count) => {
+const searchByCategory = async (category, offset, count) => {
     const events = await eventRepository
         .search()
         .where('category')
@@ -252,7 +252,7 @@ const searchBycategory = async (category, offset, count) => {
 };
 
 // Perform full text search on the title field
-const searchBytitle = async (title, offset, count) => {
+const searchByTitle = async (title, offset, count) => {
     const events = await eventRepository
         .search()
         .where('title')
