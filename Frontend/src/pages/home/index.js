@@ -1,14 +1,11 @@
-// import gif from '../../assets/img/logos/Innovation.gif'
-// import Mascot from './Mascot'
-// import Hackathon from './Hackathon'
-// import WeAre from './WeAre'
-// import logo from '../../assets/img/logos/WIF-Dark.png'
+import gif from '../../assets/main.gif'
+
 export default function Home() {
     return (
         <div>
             <header id="header" class="fixed-top">
                 <nav
-                    class="navbar navbar-expand-lg navbar-light bg-white sticky"
+                    class="navbar navbar-expand-lg navbar-light bg-dark sticky"
                     data-offset="500"
                 >
                     <div class="container">
@@ -43,33 +40,18 @@ export default function Home() {
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/about-us">
-                                        ABOUT
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/past-events">
+                                    <a class="nav-link" href="/events">
                                         EVENTS
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/blogs">
-                                        BLOGS
+                                    <a class="nav-link" href="/log-in">
+                                        LOG IN
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/board-members">
-                                        BOARD
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/code-of-conduct">
-                                        CODE OF CONDUCT
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/contact-us">
-                                        CONTACT
+                                    <a class="nav-link" href="/past-events">
+                                        SIGN UP
                                     </a>
                                 </li>
                             </ul>
@@ -80,48 +62,23 @@ export default function Home() {
 
             <section id="intro" class="clearfix">
                 <div class="container" data-aos="fade-up">
-                    <div
-                        class="intro-img"
-                        data-aos="zoom-out"
-                        data-aos-delay="200"
-                    >
-                        <img
-                            // src={gif}
-                            alt=""
-                            class="img-fluid"
-                        />
+                    <div class="intro-img" data-aos="zoom-out" data-aos-delay="200">
+                        <img src={gif} alt="" class="img-fluid" />
                     </div>
-                    <div
-                        class="intro-info"
-                        data-aos="zoom-in"
-                        data-aos-delay="100"
-                    >
-                        {/* <h2>
-                            SLIIT
-                            <br />
-                            <span>Women In FOSS</span>
-                            <br />
-                            Community!
-                        </h2> */}
-                        <h2>SLIIT Women In FOSS Community</h2>
+                    <div class="intro-info" data-aos="zoom-in" data-aos-delay="100">
+                        <h2>Volunteer Up Community</h2>
                         <p>
                             We are a group of enthusiastic volunteers who
-                            believe in the usage and contribution of Free Open
-                            Source Software (FOSS). Our community's primary
-                            objective is to promote, inspire and diversify the
-                            usage of Free Open Source Software at SLIIT amongst
-                            empowered women.
+                            believe in the usage and contribution of helping 
+                            each others. Our community's primary objective is 
+                            to promote, inspire and diversify the usage of 
+                            helping each other amongst empowered men & women.
                         </p>
                         <div>
-                            {/* <a
-                                href="!#"
-                                class="btn-get-started scrollto">
-                                Become a Member
-                            </a> */}
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfNYep3jMJa3lO54Tvwzon-2jpxe4C7Fo4kKpWyDT7PV17_xQ/viewform?usp=sf_link"
+                            <a href=""
                                 target="_blank" rel="noopener noreferrer">
                                 <button class="main-btn" type="submit">
-                                    Become A Member
+                                    Become A Volunteer
                                 </button>
                             </a>
                         </div>

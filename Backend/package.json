@@ -1,5 +1,5 @@
 {
-  "name": "Management",
+  "name": "volunteer",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -11,7 +11,7 @@
   },
   "keywords": [
     "redis",
-    "redisearch",
+    "redis search",
     "redis module"
   ],
   "author": "Dulya Perera",

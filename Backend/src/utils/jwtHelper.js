@@ -5,7 +5,7 @@ config();
 
 export const generateToken = async payload => {
     return await jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: parseInt('20d', 10),
+        expiresIn: parseInt(200000000, 10),
     });
 };
 

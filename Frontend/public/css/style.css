@@ -128,7 +128,7 @@ h6 {
     transition: all 0.5s;
     z-index: 997;
     transition: all 0.5s;
-    padding: 20px 0;
+    padding: 0px 0;
     background: #fff;
     box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.3);
     font-weight: 500;
@@ -238,12 +238,12 @@ h6 {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    color: rgba(100, 95, 136, 0.75);
+    color: #e2e2e2;
 }
 
 .navbar-light .navbar-nav .nav-link:hover,
 .navbar-light .navbar-nav .nav-link:focus {
-    color: #645f88;
+    color: #ffffff;
 }
 
 .navbar-light .navbar-nav .show > .nav-link,
@@ -251,7 +251,7 @@ h6 {
 .navbar-light .navbar-nav .nav-link.show,
 .navbar-light .navbar-nav .nav-link.active {
     font-weight: 700;
-    color: #6c55f9;
+    color: #ffffff;
     border-bottom: 3px solid;
     /* text-decoration: underline; */
 }
@@ -321,7 +321,7 @@ h6 {
     /* background: url("../img/intro-bg.png") center bottom no-repeat; */
     /* background-color: #d6abee; */
     background-size: cover;
-    padding: 200px 0 50px 0;
+    padding: 100px 0 50px 0;
     /* border-start-start-radius: 5000px;
     border-start-end-radius: 5000px;
     border-end-start-radius: 5000px;
@@ -379,21 +379,21 @@ h6 {
     /* margin-bottom: 40px; */
     font-size: 40px;
     font-weight: 700;
-    background: #b637fb;
+    background: #455a64;
     background: -webkit-repeating-radial-gradient(
         circle farthest-corner at center center,
-        #b637fb 0%,
-        #9505e3 100%
+        #455a64 0%,
+        #455a64 100%
     );
     background: -moz-repeating-radial-gradient(
         circle farthest-corner at center center,
-        #b637fb 0%,
-        #9505e3 100%
+        #455a64 0%,
+        #455a64 100%
     );
     background: repeating-radial-gradient(
         circle farthest-corner at center center,
-        #b637fb 0%,
-        #9505e3 100%
+        #455a64 0%,
+        #C53F3F 100%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1913,14 +1913,14 @@ p.form-message.error.form-message.error {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-    background: #020c18;
-    color: #757575;
+    background: #455a64;
+    color: #455a64;
     font-family: 'Poppins', sans-serif;
 }
 
 #footer .footer-top {
-    background: #020c18;
-    background-image: url('/src/assets/img/other/about-img.svg');
+    background: #455a64;
+    /* background-image: url('/src/assets/img/other/about-img.svg'); */
     padding: 40px 0 10px 0;
 }
 
@@ -2101,7 +2101,7 @@ p.form-message.error.form-message.error {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border: 1px solid #754ef9;
+    border: 1px solid #C53F3F;
     padding: 0 40px;
     font-size: 15px;
     line-height: 40px;
@@ -2114,16 +2114,16 @@ p.form-message.error.form-message.error {
     -ms-transition: all 0.3s ease-out 0s;
     -o-transition: all 0.3s ease-out 0s;
     transition: all 0.3s ease-out 0s;
-    -webkit-box-shadow: 0px 5px 8px 0px rgba(118, 78, 249, 0.55);
-    -moz-box-shadow: 0px 5px 8px 0px rgba(118, 78, 249, 0.55);
-    box-shadow: 0px 5px 8px 0px rgba(118, 78, 249, 0.55);
-    background-color: #754ef9;
+    -webkit-box-shadow: 0px 5px 8px 0px rgba(69, 90, 100, 255);
+    -moz-box-shadow: 0px 5px 8px 0px rgba(69, 90, 100, 255);
+    box-shadow: 0px 5px 8px 0px rgba(69, 90, 100, 255);
+    background-color: #C53F3F;
     /* text-transform: uppercase;  */
 }
 .main-btn:hover {
     background-color: #fff;
-    color: #754ef9;
-    border-color: #754ef9;
+    color: #455a64;
+    border-color: #455a64;
 }
 .main-btn.main-btn-2 {
     background-color: transparent;
@@ -2134,7 +2134,7 @@ p.form-message.error.form-message.error {
     box-shadow: none;
 }
 .main-btn.main-btn-2:hover {
-    background-color: #754ef9;
+    background-color: #455a64;
     color: #fff;
     border-color: #754ef9;
 }
@@ -2187,4 +2187,28 @@ p.form-message.error.form-message.error {
     background-color: #754ef9;
     color: #fff;
     border-color: #754ef9;
+}
+
+
+.head-title::before {
+    content: '';
+    background: #5a5af3;
+    height: 5px;
+    width: 180px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    transform: translateY(48px);
+}
+
+.head-title::after {
+    content: '';
+    background: #5a5af3;
+    height: 10px;
+    width: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    display: block;
+    transform: translateY(8px);
 }
