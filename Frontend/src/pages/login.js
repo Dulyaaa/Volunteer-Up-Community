@@ -40,7 +40,7 @@ class LogIn extends Component {
                     });
                     localStorage.setItem("user", JSON.stringify(response.data));
                     setTimeout(() => {
-                        alert('Data successfully entered.');
+                        alert('login successfully.');
                         this.props.history.push('/events');
                     }, 1200);
                 }
@@ -114,8 +114,7 @@ class LogIn extends Component {
                 <section id="intro" class="container" data-aos="zoom-out">
                     {this.state.loading ? (
                         <div class={`alert ${this.state.success ? "alert-success" : "alert-danger"}`} role="alert">
-
-                            {this.state.message}
+                            {this.state.message}  {this.state.success ? '' : <a href="/sign-up" class="alert-link">Register Here.</a>}
                         </div>
                     ) : ('')
                     }

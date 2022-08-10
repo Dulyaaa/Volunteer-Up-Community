@@ -14,7 +14,7 @@ const createAccount = async (req, res) => {
         if (userEmail.email === email) {
             return res.status(409).send({
                 error: true,
-                message: 'Account with that email already exists',
+                message: 'Account with that email already exists.',
                 data: '',
             });
         }
@@ -46,7 +46,7 @@ const createAccount = async (req, res) => {
         if (createUser && typeof createUser === 'number') {
             return res.status(201).send({
                 error: false,
-                message: 'Account successfully created',
+                message: 'Account successfully created.',
                 data: { token },
             });
         }
@@ -71,7 +71,7 @@ const login = async (req, res) => {
         if (userEmail.email !== email) {
             return res.status(409).send({
                 error: true,
-                message: 'Account with that email not exists',
+                message: 'Account with that email not exists.',
                 data: '',
             });
         }
@@ -80,7 +80,7 @@ const login = async (req, res) => {
         if (!user.email || !validaPassword) {
             return res.status(401).send({
                 error: true,
-                message: 'Invlaid email or password',
+                message: 'Invlaid email or password.',
             });
         }
 

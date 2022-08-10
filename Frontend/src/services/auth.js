@@ -9,27 +9,22 @@ class AuthService {
         return http.post("/api/v1/auth/login", data)
     }
 
-    // login(email, password) {
-    //     return axios.post(API_URL + "login", { email, password })
-    //         .then(response => {
-    //             return response.data;
-    //         })
-    //         .catch(e => {
-    //             // console.log(e);
-    //             return e;
-    //         });
-    // }
+    register(data) {
+        return http.post("/api/v1/auth/signup", data)
+    }
 
     logout() {
         localStorage.removeItem("user");
     }
-    register(username, email, password) {
-        return axios.post(API_URL + "signup", {
-            username,
-            email,
-            password
-        });
-    }
+
+    // register(username, email, password) {
+    //     return axios.post(API_URL + "signup", {
+    //         username,
+    //         email,
+    //         password
+    //     });
+    // }
+
     getCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));
     }
