@@ -65,12 +65,22 @@ const login = async (req, res) => {
 
         // Get the user details from Redis
         const user = await redisClient.hgetall(`user:${email}`);
-        const validAPassword = await compare(password, user.password);
 
-        if (!user.email || !validAPassword) {
+        // Check if user with that email exists
+        const userEmail = await redisClient.hgetall(`user:${email}`);
+        if (userEmail.email !== email) {
+            return res.status(409).send({
+                error: true,
+                message: 'Account with that email not exists',
+                data: '',
+            });
+        }
+
+        const validaPassword = await compare(password, user.password);
+        if (!user.email || !validaPassword) {
             return res.status(401).send({
                 error: true,
-                message: 'Invalid email or password or account with that email no exists',
+                message: 'Invlaid email or password',
             });
         }
 
@@ -78,7 +88,7 @@ const login = async (req, res) => {
         const token = await generateToken({ userKey: `user:${email}`, userId: user.id })
         return res.status(200).send({
             error: false,
-            message: 'Login successfully',
+            message: 'Login successfully. You will redirect shortly.',
             data: { token },
         });
     } catch (error) {

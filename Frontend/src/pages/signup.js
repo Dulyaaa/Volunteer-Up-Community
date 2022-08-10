@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
 import pic from '../assets/login.gif';
+import AuthService from '../services/auth'
 
 const initialState = {
     email: "",
     password: "",
-    submitted: false,
+    loading: false,
+    message: "",
     formErrors: {}
 }
 
@@ -14,7 +16,7 @@ class SignUp extends Component {
         super(props);
         this.onchangeEmail = this.onchangeEmail.bind(this);
         this.onchangePassword = this.onchangePassword.bind(this);
-        this.saveBoardingPlace = this.saveBoardingPlace.bind(this);
+        this.createUser = this.createUser.bind(this);
         this.newBoardingPlace = this.newBoardingPlace.bind(this);
         this.handleFormValidation = this.handleFormValidation.bind(this);
         this.state = initialState;
@@ -28,17 +30,35 @@ class SignUp extends Component {
         this.setState({ password: e.target.value });
     }
 
-    saveBoardingPlace = (e) => {
+    createUser = (e) => {
         e.preventDefault();
+        this.setState({
+            message: "",
+            loading: true
+        });
         if (this.handleFormValidation()) {
-            var data = {
-                email: this.state.email,
-                password: this.state.password,
-            };
+            AuthService.login(this.state.email, this.state.password).then(
+                () => {
+                    this.props.history.push("/");
+                    window.location.reload();
+                },
+                error => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                    this.setState({
+                        loading: false,
+                        message: resMessage
+                    });
+                }
+            )
             // BoardingPlaceService.create(data)
             //     .then(response => {
             //         this.setState({
-            //             submitted: true
+            //             loading: true
             //         });
             //         // alert('Data successfully entered.');
             //         console.log(response.data);
@@ -53,7 +73,7 @@ class SignUp extends Component {
         this.setState({
             email: "",
             password: "",
-            submitted: false,
+            loading: false,
             formErrors: {}
         });
     }
@@ -196,7 +216,7 @@ class SignUp extends Component {
                                                 <div class="text-center">
                                                     <a href=""
                                                         target="_blank" rel="noopener noreferrer">
-                                                        <button class="main-btn" type="submit" onClick={this.saveBoardingPlace}>
+                                                        <button class="main-btn" type="submit" onClick={this.createUser}>
                                                             Log In
                                                         </button>
                                                     </a>

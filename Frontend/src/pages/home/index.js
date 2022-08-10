@@ -50,7 +50,7 @@ export default function Home() {
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/past-events">
+                                    <a class="nav-link" href="/sign-up">
                                         SIGN UP
                                     </a>
                                 </li>

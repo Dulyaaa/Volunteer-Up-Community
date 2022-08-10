@@ -1,93 +1,62 @@
 import React, { Component } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
 import pic from '../assets/login.gif';
+import AuthService from '../services/auth'
 
 const initialState = {
     email: "",
     password: "",
-    submitted: false,
-    formErrors: {}
+    loading: false,
+    message: "",
+    success: true
 }
 
 class LogIn extends Component {
     constructor(props) {
         super(props);
-        this.onchangeEmail = this.onchangeEmail.bind(this);
-        this.onchangePassword = this.onchangePassword.bind(this);
-        this.saveBoardingPlace = this.saveBoardingPlace.bind(this);
-        this.newBoardingPlace = this.newBoardingPlace.bind(this);
-        this.handleFormValidation = this.handleFormValidation.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
         this.state = initialState;
     }
 
-    onchangeEmail = (e) => {
-        this.setState({ email: e.target.value });
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
     }
 
-    onchangePassword = (e) => {
-        this.setState({ password: e.target.value });
-    }
-
-    saveBoardingPlace = (e) => {
+    handleLogin = (e) => {
         e.preventDefault();
-        if (this.handleFormValidation()) {
-            var data = {
-                email: this.state.email,
-                password: this.state.password,
-            };
-            // BoardingPlaceService.create(data)
-            //     .then(response => {
-            //         this.setState({
-            //             submitted: true
-            //         });
-            //         // alert('Data successfully entered.');
-            //         console.log(response.data);
-            //     })
-            //     .catch(e => {
-            //         console.log(e);
-            //     });
-        }
-    }
-
-    newBoardingPlace = () => {
-        this.setState({
-            email: "",
-            password: "",
-            submitted: false,
-            formErrors: {}
-        });
-    }
-
-    handleFormValidation() {
-        const { email, password } = this.state;
-
-        let formErrors = {};
-        let formIsValid = true;
-
-        if (!email) {
-            formIsValid = false;
-            formErrors["emailError"] = "*Pet Boarding Place Email is required.";
-        }
-        else {
-            const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
-            if (!pattern.test(email)) {
-                formIsValid = false;
-                formErrors["emailError"] = "*Please enter validate format of email."
-            }
-        }
-
-        if (!password) {
-            formIsValid = false;
-            formErrors["passwordError"] = "*Pet Boarding Place Opening Hours are required.";
-        }
-
-        this.setState({ formErrors: formErrors });
-        return formIsValid
+        const data = {
+            email: this.state.email,
+            password: this.state.password
+        };
+        AuthService.login(data)
+            .then((response) => {
+                console.log("response", response)
+                if (response.data.data.token) {
+                    this.setState({
+                        loading: true,
+                        message: response.data.message,
+                        success: true
+                    });
+                    localStorage.setItem("user", JSON.stringify(response.data));
+                    setTimeout(() => {
+                        alert('Data successfully entered.');
+                        this.props.history.push('/events');
+                    }, 1200);
+                }
+            })
+            .catch((error) => {
+                this.setState({
+                    loading: true,
+                    message: error.response.data.message,
+                    success: false
+                });
+                console.log(error.response);
+                alert(error.response.data.message);
+            });
     }
 
     render() {
-        const { emailError, passwordError } = this.state.formErrors;
-
         return (
             <div>
                 <header id="header" class="fixed-top">
@@ -143,10 +112,17 @@ class LogIn extends Component {
                 </header>
 
                 <section id="intro" class="container" data-aos="zoom-out">
-                    <div class="text-center" data-aos="fade-up">
-                        <h1 class="head-title">Log In Now</h1>
-                    </div>
-                    <Card style={{ width: '100%', marginTop: "5%", marginBottom: "5%" }}>
+                    {this.state.loading ? (
+                        <div class={`alert ${this.state.success ? "alert-success" : "alert-danger"}`} role="alert">
+
+                            {this.state.message}
+                        </div>
+                    ) : ('')
+                    }
+                    <Card style={{ width: '100%', marginTop: "3%", marginBottom: "5%" }}>
+                        <header class="section-header" style={{ marginTop: "5%" }}>
+                            <h3>Log In Now</h3>
+                        </header>
                         <Card.Body>
                             <Row>
                                 <Col>
@@ -155,8 +131,7 @@ class LogIn extends Component {
                                 <Col>
                                     <div className="submit-form" style={{ width: 350, textAlign: "left", color: "grey", marginTop: "2%", marginLeft: "7%" }}>
                                         <div>
-                                            <form>
-                                                {/* Pet Boarding Place Email */}
+                                            <form onSubmit={(event) => this.handleLogin(event)}>
                                                 <div className="form-group">
                                                     <label htmlFor="email">User Email</label>
                                                     <input
@@ -165,16 +140,10 @@ class LogIn extends Component {
                                                         id="email"
                                                         required
                                                         value={this.state.email}
-                                                        onChange={this.onchangeEmail}
+                                                        onChange={this.onChange}
                                                         name="email"
                                                     />
-                                                    {/* Pet Boarding Place Email error */}
-                                                    <div className="">
-                                                        {emailError &&
-                                                            <div style={{ color: "red", paddingBottom: 10, paddingTop: 3 }}>{emailError}</div>}
-                                                    </div>
                                                 </div>
-                                                {/* Pet Boarding Place Opening Hours */}
                                                 <div className="form-group">
                                                     <label htmlFor="password">Password</label>
                                                     <input
@@ -183,20 +152,14 @@ class LogIn extends Component {
                                                         id="password"
                                                         required
                                                         value={this.state.password}
-                                                        onChange={this.onchangePassword}
+                                                        onChange={this.onChange}
                                                         name="password"
                                                     />
-                                                    {/* Pet Boarding Place Opening Hours error */}
-                                                    <div className="">
-                                                        {passwordError &&
-                                                            <div style={{ color: "red", paddingBottom: 10, paddingTop: 3 }}>{passwordError}</div>}
-                                                    </div>
                                                 </div>
                                                 <br />
                                                 <div class="text-center">
-                                                    <a href=""
-                                                        target="_blank" rel="noopener noreferrer">
-                                                        <button class="main-btn" type="submit" onClick={this.saveBoardingPlace}>
+                                                    <a>
+                                                        <button class="main-btn" type="submit" >
                                                             Log In
                                                         </button>
                                                     </a>
@@ -214,4 +177,4 @@ class LogIn extends Component {
     }
 }
 
-export default LogIn;
+export default LogIn
