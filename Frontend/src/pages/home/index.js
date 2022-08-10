@@ -54,6 +54,11 @@ export default function Home() {
                                         SIGN UP
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/profile">
+                                        SIGN UP
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
