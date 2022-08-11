@@ -2,6 +2,7 @@ import { eventRepository } from '../repository/event.js';
 import { preparePagination, getTotalPages } from '../utils/pagination.js';
 
 const createEvent = async (req, res) => {
+    console.log("hi", req)
     try {
         const {
             title,
