@@ -47,7 +47,7 @@ Refer to [this example](https://github.com/redis-developer/basic-analytics-dashb
 ### Local installation
 
 #### Frontend
-Go to `frontend` folder (`cd frontend`) and then:
+Go to `Frontend` folder (`cd Frontend`) and then:
 
 ```
 # install dependencies
@@ -58,7 +58,7 @@ npm start
 ```
 
 #### Backend
-Go to `backend` folder (`cd backend`) and then:
+Go to `Backend` folder (`cd Backend`) and then:
 
 ```
 # install dependencies
