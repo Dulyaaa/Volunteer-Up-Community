@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
-import AuthService from '../services/auth'
-import pic from '../assets/signup.gif';
-import logo from '../assets/logo.png';
+import AuthService from '../../services/auth'
+import EventService from '../../services/event'
+import logo from '../../assets/logo.png';
+import pic from '../../assets/login.gif';
 
 const initialState = {
-    firstName: "",
-    lastName: "",
-    displayName: "",
-    email: "",
-    password: "",
+    title: "",
+    description: "",
+    category: "",
+    venue: "",
+    locationPoint: "",
+    startDate: "",
+    endDate: "",
+    imageUrl: "",
     loading: false,
     message: "",
-    success: true
+    success: false
 }
 
-class SignUp extends Component {
+class NewEvent extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);
-        this.handleRegister = this.handleRegister.bind(this);
+        this.createEvent = this.createEvent.bind(this);
         this.state = initialState;
     }
 
@@ -27,28 +31,32 @@ class SignUp extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    handleRegister = (e) => {
+    createEvent = (e) => {
         e.preventDefault();
-        const data = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            displayName: this.state.displayName,
-            email: this.state.email,
-            password: this.state.password
+        const token = AuthService.getCurrentUser();
+        const config = {
+            headers: { Authorization: `Bearer ${token.data.token}` }
         };
-        AuthService.register(data)
+        const data = {
+            title: this.state.title,
+            description: this.state.description,
+            category: this.state.category,
+            venue: this.state.venue,
+            locationPoint: this.state.locationPoint,
+            startDate: this.state.startDate,
+            endDate: this.state.endDate,
+            imageUrl: this.state.imageUrl,
+        };
+        EventService.create(data, config)
             .then((response) => {
-                if (response.data.data.token) {
                     this.setState({
                         loading: true,
                         message: response.data.message,
                         success: true
                     });
-                    localStorage.setItem("user", JSON.stringify(response.data));
                     setTimeout(() => {
                         this.props.history.push('/profile');
                     }, 1200);
-                }
             })
             .catch((error) => {
                 this.setState({
@@ -85,7 +93,7 @@ class SignUp extends Component {
                             </button>
                             <div class="navbar-collapse collapse" id="navbarContent">
                                 <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item">
+                                    <li class="nav-item active">
                                         <a class="nav-link" href="/">
                                             HOME
                                         </a>
@@ -96,13 +104,14 @@ class SignUp extends Component {
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/log-in">
-                                            LOG IN
+                                        <a class="nav-link" href="/profile">
+                                            PROFILE
                                         </a>
                                     </li>
-                                    <li class="nav-item active">
+                                    {/* TODO: logout */}
+                                    <li class="nav-item">
                                         <a class="nav-link" href="/sign-up">
-                                            SIGN UP
+                                            LOG OUT
                                         </a>
                                     </li>
                                 </ul>
@@ -116,9 +125,9 @@ class SignUp extends Component {
                             {this.state.message} {this.state.success ? '' : <a href="/log-in" class="alert-link">Log In Here.</a>}
                         </div>
                     ) : ('')}
-                    <Card style={{ width: '100%'}}>
+                    <Card style={{ width: '100%' }}>
                         <header class="section-header" style={{ marginTop: "5%" }}>
-                            <h3>Register Now</h3>
+                            <h3>Create New Event</h3>
                         </header>
                         <Card.Body>
                             <Row>
@@ -128,72 +137,107 @@ class SignUp extends Component {
                                 <Col>
                                     <div className="submit-form" style={{ width: 350, textAlign: "left", color: "grey", marginLeft: "7%" }}>
                                         <div>
-                                            <form onSubmit={(event) => this.handleRegister(event)}>
+                                            <form onSubmit={(event) => this.createEvent(event)}>
                                                 <div className="form-group">
-                                                    <label htmlFor="firstName" >First Name</label>
+                                                    <label htmlFor="title" >Event Title</label>
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        id="firstName"
+                                                        id="title"
                                                         required
-                                                        value={this.state.firstName}
+                                                        value={this.state.title}
                                                         onChange={this.onChange}
-                                                        name="firstName"
+                                                        name="title"
                                                     />
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="lastName" >Last Name</label>
+                                                    <label htmlFor="lastName" >Event Description</label>
+                                                    <textarea
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="description"
+                                                        required
+                                                        value={this.state.description}
+                                                        onChange={this.onChange}
+                                                        name="description"
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="displayName" >Category</label>
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        id="lastName"
+                                                        id="category"
                                                         required
-                                                        value={this.state.lastName}
+                                                        value={this.state.category}
                                                         onChange={this.onChange}
-                                                        name="lastName"
+                                                        name="category"
                                                     />
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="displayName" >Display Name</label>
+                                                    <label htmlFor="locationPoint" >Location Point</label>
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        id="displayName"
+                                                        id="locationPoint"
                                                         required
-                                                        value={this.state.displayName}
+                                                        value={this.state.locationPoint}
                                                         onChange={this.onChange}
-                                                        name="displayName"
+                                                        name="locationPoint"
                                                     />
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="email">User Email</label>
+                                                    <label htmlFor="startDate" >Start Date</label>
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        id="email"
+                                                        id="startDate"
                                                         required
-                                                        value={this.state.email}
+                                                        value={this.state.startDate}
                                                         onChange={this.onChange}
-                                                        name="email"
+                                                        name="startDate"
                                                     />
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="password">Password</label>
+                                                    <label htmlFor="endDate" >End Date</label>
                                                     <input
-                                                        type="password"
+                                                        type="text"
                                                         className="form-control"
-                                                        id="password"
+                                                        id="endDate"
                                                         required
-                                                        value={this.state.password}
+                                                        value={this.state.endDate}
                                                         onChange={this.onChange}
-                                                        name="password"
+                                                        name="endDate"
                                                     />
                                                 </div>
-                                                <br />
+                                                <div className="form-group">
+                                                    <label htmlFor="imageUrl" >Image Url</label>
+                                                    <textarea
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="imageUrl"
+                                                        required
+                                                        value={this.state.imageUrl}
+                                                        onChange={this.onChange}
+                                                        name="imageUrl"
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="venue" >Venue</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="venue"
+                                                        required
+                                                        value={this.state.venue}
+                                                        onChange={this.onChange}
+                                                        name="venue"
+                                                    />
+                                                </div>
                                                 <div class="text-center">
                                                     <a>
-                                                        <button class="main-btn" type="submit" >
-                                                            Register
+                                                        <button class="main-btn" type="submit" onSubmit={(event) => this.createEvent(event)}>
+                                                            Add New Event
                                                         </button>
                                                     </a>
                                                 </div>
@@ -209,5 +253,4 @@ class SignUp extends Component {
         );
     }
 }
-
-export default SignUp
+export default NewEvent

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
+import AuthService from '../services/auth';
+import logo from '../assets/logo.png';
 import pic from '../assets/login.gif';
-import AuthService from '../services/auth'
 
 const initialState = {
     email: "",
@@ -31,7 +32,6 @@ class LogIn extends Component {
         };
         AuthService.login(data)
             .then((response) => {
-                console.log("response", response)
                 if (response.data.data.token) {
                     this.setState({
                         loading: true,
@@ -40,8 +40,7 @@ class LogIn extends Component {
                     });
                     localStorage.setItem("user", JSON.stringify(response.data));
                     setTimeout(() => {
-                        alert('login successfully.');
-                        this.props.history.push('/events');
+                        this.props.history.push('/profile');
                     }, 1200);
                 }
             })
@@ -52,7 +51,6 @@ class LogIn extends Component {
                     success: false
                 });
                 console.log(error.response);
-                alert(error.response.data.message);
             });
     }
 
@@ -61,20 +59,15 @@ class LogIn extends Component {
             <div>
                 <header id="header" class="fixed-top">
                     <nav
-                        class="navbar navbar-expand-lg navbar-light bg-white sticky"
+                        class="navbar navbar-expand-lg navbar-light bg-dark sticky"
                         data-offset="500"
                     >
                         <div class="container">
-                            {/* <a href="/" class="navbar-brand"> */}
-                            {/* SLIIT<span class="text-primary">WIF</span> */}
-                            {/* <img src={logo} alt="logo" height="80" width="130" class="img-fluid just" /> */}
                             <div class="logo float-left">
                                 <a href="/">
-                                    {/* <img src={logo} alt="" class="img-fluid" /> */}
+                                    <img src={logo} alt="" class="img-fluid" />
                                 </a>
                             </div>
-                            {/* </a> */}
-                            {/* <img src={logo} alt="logo" height="50" width="100" class="img-fluid just" /> */}
                             <button
                                 class="navbar-toggler"
                                 data-toggle="collapse"
@@ -85,14 +78,16 @@ class LogIn extends Component {
                             >
                                 <span class="navbar-toggler-icon"></span>
                             </button>
-                            <div
-                                class="navbar-collapse collapse"
-                                id="navbarContent"
-                            >
+                            <div class="navbar-collapse collapse" id="navbarContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
                                         <a class="nav-link" href="/">
                                             HOME
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/events">
+                                            EVENTS
                                         </a>
                                     </li>
                                     <li class="nav-item active">
@@ -101,7 +96,7 @@ class LogIn extends Component {
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/past-events">
+                                        <a class="nav-link" href="/sign-up">
                                             SIGN UP
                                         </a>
                                     </li>
@@ -110,7 +105,6 @@ class LogIn extends Component {
                         </div>
                     </nav>
                 </header>
-
                 <section id="intro" class="container" data-aos="zoom-out">
                     {this.state.loading ? (
                         <div class={`alert ${this.state.success ? "alert-success" : "alert-danger"}`} role="alert">
@@ -129,7 +123,6 @@ class LogIn extends Component {
                                 </Col>
                                 <Col>
                                     <div className="submit-form" style={{ width: 350, textAlign: "left", color: "grey", marginTop: "2%", marginLeft: "7%" }}>
-                                        <div>
                                             <form onSubmit={(event) => this.handleLogin(event)}>
                                                 <div className="form-group">
                                                     <label htmlFor="email">User Email</label>
@@ -164,7 +157,6 @@ class LogIn extends Component {
                                                     </a>
                                                 </div>
                                             </form>
-                                        </div>
                                     </div>
                                 </Col>
                             </Row>

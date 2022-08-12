@@ -1,4 +1,6 @@
 import gif from '../../assets/main.gif'
+import logo from '../../assets/logo.png'
+import WeAre from './weAre'
 
 export default function Home() {
     return (
@@ -9,16 +11,11 @@ export default function Home() {
                     data-offset="500"
                 >
                     <div class="container">
-                        {/* <a href="/" class="navbar-brand"> */}
-                        {/* SLIIT<span class="text-primary">WIF</span> */}
-                        {/* <img src={logo} alt="logo" height="80" width="130" class="img-fluid just" /> */}
                         <div class="logo float-left">
                             <a href="/">
-                                {/* <img src={logo} alt="" class="img-fluid" /> */}
+                                <img src={logo} alt="" class="img-fluid" />
                             </a>
                         </div>
-                        {/* </a> */}
-                        {/* <img src={logo} alt="logo" height="50" width="100" class="img-fluid just" /> */}
                         <button
                             class="navbar-toggler"
                             data-toggle="collapse"
@@ -29,10 +26,7 @@ export default function Home() {
                         >
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div
-                            class="navbar-collapse collapse"
-                            id="navbarContent"
-                        >
+                        <div class="navbar-collapse collapse" id="navbarContent">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item active">
                                     <a class="nav-link" href="/">
@@ -54,17 +48,11 @@ export default function Home() {
                                         SIGN UP
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/profile">
-                                        SIGN UP
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                     </div>
                 </nav>
             </header>
-
             <section id="intro" class="clearfix">
                 <div class="container" data-aos="fade-up">
                     <div class="intro-img" data-aos="zoom-out" data-aos-delay="200">
@@ -74,29 +62,22 @@ export default function Home() {
                         <h2>Volunteer Up Community</h2>
                         <p>
                             We are a group of enthusiastic volunteers who
-                            believe in the usage and contribution of helping 
-                            each others. Our community's primary objective is 
-                            to promote, inspire and diversify the usage of 
+                            believe in the usage and contribution of helping
+                            each others. Our community's primary objective is
+                            to promote, inspire and diversify the usage of
                             helping each other amongst empowered men & women.
                         </p>
-                        <div>
-                            <a href=""
-                                target="_blank" rel="noopener noreferrer">
+                    
+                            <a href="/sign-up" rel="no referrer">
                                 <button class="main-btn" type="submit">
                                     Become A Volunteer
                                 </button>
                             </a>
-                        </div>
                     </div>
                 </div>
             </section>
             <main id="main">
-                {/* <WeAre />
-                <Mascot />
-                <Hackathon /> */}
-                {/* <PastEvents /> */}
-                {/* <Webinars /> */}
-                {/* <Blogs /> */}
+                <WeAre />
             </main>
         </div>
     )

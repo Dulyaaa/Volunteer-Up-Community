@@ -2,7 +2,6 @@ import { eventRepository } from '../repository/event.js';
 import { preparePagination, getTotalPages } from '../utils/pagination.js';
 
 const createEvent = async (req, res) => {
-    console.log("hi", req)
     try {
         const {
             title,
@@ -97,6 +96,35 @@ const getEventById = async (req, res) => {
             message: 'Event retrieved successfully',
             data: event,
         });
+    } catch (error) {
+        return res.status(500).send({
+            error: true,
+            message: `Server error, please try again later. ${error}`,
+        });
+    }
+};
+
+const deleteEventById = async (req, res) => {
+    try {
+        const { eventId } = req.params;
+
+        // Fetch a single event by ID
+        const event = await eventRepository.fetch(eventId);
+
+        if (!event) {
+            return res.status(404).send({
+                error: true,
+                message: 'Event not found.',
+                data: event,
+            });
+        }
+
+        if (eventRepository.remove(eventId)){
+            return res.status(200).send({
+                error: false,
+                message: 'Event deleted successfully',
+            });
+        }
     } catch (error) {
         return res.status(500).send({
             error: true,
@@ -200,7 +228,6 @@ const searchEvents = async (req, res) => {
         const searchValue = Object.values(req.query)[0];
 
         const { page, limit } = req.query;
-
         const { page: offset, limit: count } = preparePagination(page, limit);
 
         if (!searchKey) {
@@ -278,6 +305,7 @@ export {
     createEvent,
     getAllEvents,
     getEventById,
+    deleteEventById,
     getEventsByUserId,
     getEventsNearMe,
     searchEvents,

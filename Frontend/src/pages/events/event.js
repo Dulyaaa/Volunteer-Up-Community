@@ -19,6 +19,7 @@ export const Event = (props) => {
                         #{category}
                     </p>
                     <p>{location}</p>
+                    {/* TODO: use this for new template*/}
                     <p className='{styles.event_date}'>{new Date(startDate).toDateString()}</p>
                 </div>
             </div>

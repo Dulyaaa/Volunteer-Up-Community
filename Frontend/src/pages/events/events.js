@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import ReactPaginate from 'react-paginate'
-import logo from '../../assets/logo.png'
 import EventService from '../../services/event';
+import logo from '../../assets/logo.png'
 
 export default class Events extends Component {
     constructor(props) {
@@ -37,13 +36,13 @@ export default class Events extends Component {
                                     <h6>{event.title}</h6>
                                     <p>{event.description}</p>
                                 </div>
+                                {/* TODO: complete */}
                                 <h5> <i class="fa fa-microphone"></i>{' '}{event.speaker}</h5>
                                 <h5> <i class="fa fa-calendar"></i>{' '}{event.date}</h5>
                             </div>
                         </div>
                     </div>
                 </React.Fragment>)
-
                 this.setState({
                     pageCount: Math.ceil(data.length / this.state.perPage),
                     postData
@@ -54,35 +53,25 @@ export default class Events extends Component {
     handlePageClick = (e) => {
         const selectedPage = e.selected;
         const offset = selectedPage * this.state.perPage;
-
         this.setState({
             currentPage: selectedPage,
             offset: offset
         }, () => {
             this.receivedData()
         });
-
     };
 
     render() {
         return (
             <div>
                 <header id="header" class="fixed-top">
-                    <nav
-                        class="navbar navbar-expand-lg navbar-light bg-white sticky"
-                        data-offset="500"
-                    >
+                    <nav class="navbar navbar-expand-lg navbar-light bg-dark sticky" data-offset="500">
                         <div class="container">
-                            {/* <a href="/" class="navbar-brand"> */}
-                            {/* SLIIT<span class="text-primary">WIF</span> */}
-                            {/* <img src={logo} alt="logo" height="80" width="130" class="img-fluid just" /> */}
                             <div class="logo float-left">
                                 <a href="/">
                                     <img src={logo} alt="" class="img-fluid" />
                                 </a>
                             </div>
-                            {/* </a> */}
-                            {/* <img src={logo} alt="logo" height="50" width="100" class="img-fluid just" /> */}
                             <button
                                 class="navbar-toggler"
                                 data-toggle="collapse"
@@ -93,44 +82,26 @@ export default class Events extends Component {
                             >
                                 <span class="navbar-toggler-icon"></span>
                             </button>
-                            <div
-                                class="navbar-collapse collapse"
-                                id="navbarContent"
-                            >
+                            <div class="navbar-collapse collapse" id="navbarContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
                                         <a class="nav-link" href="/">
                                             HOME
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/about-us">
-                                            ABOUT
-                                        </a>
-                                    </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="/past-events">
+                                        <a class="nav-link" href="/events">
                                             EVENTS
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/blogs">
-                                            BLOGS
+                                        <a class="nav-link" href="/log-in">
+                                            LOG IN
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/board-members">
-                                            BOARD
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/code-of-conduct">
-                                            CODE OF CONDUCT
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/contact-us">
-                                            CONTACT
+                                        <a class="nav-link" href="/sign-up">
+                                            SIGN UP
                                         </a>
                                     </li>
                                 </ul>
@@ -138,41 +109,44 @@ export default class Events extends Component {
                         </div>
                     </nav>
                 </header>
-
                 <section id="intro" class="container" data-aos="zoom-out">
-                        <header class="section-header" style={{ marginTop: "5%" }}>
-                            <h3>Events</h3>
-                        </header>
-                        <div id="cards_landscape_wrap-2">
-                            <div class="container">
-                                <div class="row justify-content-center">
-                                    {this.state.postData}
-                                </div>
+                    <header class="section-header" style={{ marginTop: "5%" }}>
+                        <h3>Events</h3>
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                            <button class="btn btn-outline-dark" type="submit">Search</button>
+                        </form>
+                    </header>
+                    <div id="cards_landscape_wrap-2">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                {this.state.postData}
                             </div>
                         </div>
-                        <ReactPaginate
-                            previousLabel={'< Previous'}
-                            nextLabel={'Next >'}
-                            pageCount={this.state.pageCount}
-                            onPageChange={this.handlePageClick}
-                            // containerClassName={"navigationButtons"}
-                            // previousLinkClassName={"previousButton"}
-                            // nextLinkClassName={"nextButton"}
-                            // disabledClassName={"navigationDisabled"}
-                            // activeClassName={"navigationActive"}
-                            pageClassName="page-item"
-                            pageLinkClassName="page-link"
-                            previousClassName="page-item"
-                            previousLinkClassName="page-link"
-                            nextClassName="page-item"
-                            nextLinkClassName="page-link"
-                            breakLabel="..."
-                            breakClassName="page-item"
-                            breakLinkClassName="page-link"
-                            containerClassName="pagination justify-content-end"
-                            activeClassName="active"
-                            renderOnZeroPageCount={null}
-                        />
+                    </div>
+                    <ReactPaginate
+                        previousLabel={'< Previous'}
+                        nextLabel={'Next >'}
+                        pageCount={this.state.pageCount}
+                        onPageChange={this.handlePageClick}
+                        // containerClassName={"navigationButtons"}
+                        // previousLinkClassName={"previousButton"}
+                        // nextLinkClassName={"nextButton"}
+                        // disabledClassName={"navigationDisabled"}
+                        // activeClassName={"navigationActive"}
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        containerClassName="pagination justify-content-end"
+                        activeClassName="active"
+                        renderOnZeroPageCount={null}
+                    />
                 </section>
             </div>
         )

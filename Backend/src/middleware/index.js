@@ -10,7 +10,7 @@ export const authGuard = async (req, res, next) => {
     if (!validatedToken) {
         return res.status(401).send({
             error: true,
-            message: 'Unauthorized user.',
+            message: 'Unauthorized user.'
         });
     }
 
