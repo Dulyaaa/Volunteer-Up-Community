@@ -36,9 +36,6 @@ export default class Events extends Component {
                                     <h6>{event.title}</h6>
                                     <p>{event.description}</p>
                                 </div>
-                                {/* TODO: complete */}
-                                <h5> <i class="fa fa-microphone"></i>{' '}{event.speaker}</h5>
-                                <h5> <i class="fa fa-calendar"></i>{' '}{event.date}</h5>
                             </div>
                         </div>
                     </div>

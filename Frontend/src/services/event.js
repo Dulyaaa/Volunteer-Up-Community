@@ -17,6 +17,10 @@ class EventService {
         return http.get("/api/v1/events/users", config);
     }
 
+    getDraftsByUser(config) {
+        return http.get("/api/v1/events/draft", config);
+    }
+
     delete(id) {
         return http.delete(`/api/v1/events/delete/${id}`);
     }

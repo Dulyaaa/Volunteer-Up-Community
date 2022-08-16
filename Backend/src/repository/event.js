@@ -15,6 +15,7 @@ const eventSchema = new Schema(EventRepository, {
     userId: { type: 'string' },
     createdAt: { type: 'date', sortable: true },
     updatedAt: { type: 'date', sortable: true },
+    visibility: { type: 'boolean' },
 }, {
     dataStructure: 'HASH'
 });

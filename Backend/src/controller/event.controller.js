@@ -12,6 +12,7 @@ const createEvent = async (req, res) => {
             startDate,
             endDate,
             imageUrl,
+            visibility
         } = req.body;
 
         const event = await eventRepository.createAndSave({
@@ -26,6 +27,7 @@ const createEvent = async (req, res) => {
             userId: req.validatedToken.userId,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
+            visibility
         });
 
         if (event) {
@@ -51,6 +53,8 @@ const getAllEvents = async (req, res) => {
         // Fetch all events sorting by the date created which ensures that the latest one come up first
         const allEvents = await eventRepository
             .search()
+            .where('visibility')
+            .equal(true)
             .sortDescending('createdAt')
             .return.page(offset, count);
 
@@ -119,12 +123,57 @@ const deleteEventById = async (req, res) => {
             });
         }
 
-        if (eventRepository.remove(eventId)){
+        if (eventRepository.remove(eventId)) {
             return res.status(200).send({
                 error: false,
                 message: 'Event deleted successfully',
             });
         }
+    } catch (error) {
+        return res.status(500).send({
+            error: true,
+            message: `Server error, please try again later. ${error}`,
+        });
+    }
+};
+
+const getDraftEventsByUserId = async (req, res) => {
+    try {
+        const { userId } = req.validatedToken;
+        const { page, limit } = req.query;
+
+        const { page: offset, limit: count } = preparePagination(page, limit);
+
+        // Fetch all host events sorting by the date created which ensures that the latest one come up first
+        const userDraftEvents = await eventRepository
+            .search()
+            .where('userId')
+            .equal(userId)
+            .where('visibility')
+            .equal(false)
+            .sortDescending('createdAt')
+            .return.page(offset, count);
+
+        // Get the total number of events in the DB
+        const totalEvents = await eventRepository
+            .search()
+            .where('userId')
+            .equal(userId)
+            .where('visibility')
+            .equal(false)
+            .return.count();
+
+        const totalPages = getTotalPages(totalEvents, count);
+
+        return res.status(200).send({
+            error: false,
+            message: 'Events retrieved successfully',
+            data: {
+                userDraftEvents,
+                totalEvents,
+                totalPages,
+            },
+        });
     } catch (error) {
         return res.status(500).send({
             error: true,
@@ -145,6 +194,8 @@ const getEventsByUserId = async (req, res) => {
             .search()
             .where('userId')
             .equal(userId)
+            .where('visibility')
+            .equal(true)
             .sortDescending('createdAt')
             .return.page(offset, count);
 
@@ -153,6 +204,8 @@ const getEventsByUserId = async (req, res) => {
             .search()
             .where('userId')
             .equal(userId)
+            .where('visibility')
+            .equal(true)
             .return.count();
 
         const totalPages = getTotalPages(totalEvents, count);
@@ -307,6 +360,7 @@ export {
     getEventById,
     deleteEventById,
     getEventsByUserId,
+    getDraftEventsByUserId,
     getEventsNearMe,
     searchEvents,
 };

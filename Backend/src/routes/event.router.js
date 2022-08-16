@@ -4,6 +4,7 @@ import {
     getAllEvents,
     getEventById,
     getEventsByUserId,
+    getDraftEventsByUserId,
     getEventsNearMe,
     searchEvents,
     deleteEventById
@@ -14,7 +15,8 @@ const eventRouter = Router();
 
 eventRouter.post('', authGuard, createEvent);
 eventRouter.get('', getAllEvents);
-eventRouter.get('/users', authGuard, getEventsByUserId);
+eventRouter.get('/users', authGuard, getEventsByUserId); 
+eventRouter.get('/draft', authGuard, getDraftEventsByUserId); 
 eventRouter.delete('/delete/:eventId', deleteEventById);
 eventRouter.get('/locations', getEventsNearMe);
 eventRouter.get('/search', searchEvents);

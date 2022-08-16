@@ -1,88 +1,89 @@
 import React, { Component } from 'react';
+import { OverlayTrigger, Row, Col, Tooltip, Table } from 'react-bootstrap'
 import AuthService from '../../services/auth'
+import EventService from '../../services/event'
 import UserEvents from './userEvents'
+import logo from '../../assets/logo.png'
 
 const initialState = {
-    title: "",
-    description: "",
-    category: "",
-    venue: "",
-    locationPoint: "",
-    startDate: "",
-    endDate: "",
-    imageUrl: "",
-    loading: false,
-    message: "",
-    success: true
+    userEvents: [],
+    userDraftEvents: [],
 }
 
 class Profile extends Component {
     constructor(props) {
         super(props);
-        this.onChange = this.onChange.bind(this);
-        this.handleLogin = this.handleLogin.bind(this);
+        this.getUserEvents = this.getUserEvents.bind(this);
+        this.getUserDraftEvents = this.getUserDraftEvents.bind(this);
         this.state = initialState;
     }
 
-    onChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
+    componentDidMount() {
+        this.getUserEvents();
+        this.getUserDraftEvents();
     }
 
-    handleLogin = (e) => {
-        e.preventDefault();
-        // const data = {
-        //     email: this.state.email,
-        //     password: this.state.password
-        // };
-        // AuthService.login(data)
-        //     .then((response) => {
-        //         console.log("response", response)
-        //         if (response.data.data.token) {
-        //             this.setState({
-        //                 loading: true,
-        //                 message: response.data.message,
-        //                 success: true
-        //             });
-        //             localStorage.setItem("user", JSON.stringify(response.data));
-        //             setTimeout(() => {
-        //                 alert('login successfully.');
-        //                 this.props.history.push('/events');
-        //             }, 1200);
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         this.setState({
-        //             loading: true,
-        //             message: error.response.data.message,
-        //             success: false
-        //         });
-        //         console.log(error.response);
-        //         alert(error.response.data.message);
-        //     });
-
-        const result = AuthService.getCurrentUser();
-        console.log("result", result)
+    getUserEvents = () => {
+        const token = AuthService.getCurrentUser();
+        const config = {
+            headers: { Authorization: `Bearer ${token.data.token}` }
+        };
+        EventService.getByUser(config)
+            .then(response => {
+                this.setState({
+                    userEvents: response.data.data.userEvents
+                });
+                console.log("userEvents", this.state.userEvents)
+            })
+            .catch((error) => {
+                this.setState({
+                    loading: true,
+                    message: error.response.data.message,
+                    success: false
+                });
+                console.log(error.response);
+                // alert(error.response.data.message);
+            });
     }
+
+    getUserDraftEvents = () => {
+        const token = AuthService.getCurrentUser();
+        const config = {
+            headers: { Authorization: `Bearer ${token.data.token}` }
+        };
+        EventService.getDraftsByUser(config)
+            .then(response => {
+                this.setState({
+                    userDraftEvents: response.data.data.userDraftEvents
+                });
+                console.log("userDraftEvents", this.state.userDraftEvents)
+            })
+            .catch((error) => {
+                this.setState({
+                    loading: true,
+                    message: error.response.data.message,
+                    success: false
+                });
+                console.log(error.response);
+                // alert(error.response.data.message);
+            });
+    }
+
 
     render() {
         return (
             <div>
                 <header id="header" class="fixed-top">
                     <nav
-                        class="navbar navbar-expand-lg navbar-light bg-white sticky"
+                        class="navbar navbar-expand-lg navbar-light bg-dark sticky"
                         data-offset="500"
                     >
                         <div class="container">
-                            {/* <a href="/" class="navbar-brand"> */}
-                            {/* SLIIT<span class="text-primary">WIF</span> */}
-                            {/* <img src={logo} alt="logo" height="80" width="130" class="img-fluid just" /> */}
                             <div class="logo float-left">
                                 <a href="/">
-                                    {/* <img src={logo} alt="" class="img-fluid" /> */}
+                                    <img src={logo} alt="" class="img-fluid" />
                                 </a>
                             </div>
-                            {/* </a> */}
-                            {/* <img src={logo} alt="logo" height="50" width="100" class="img-fluid just" /> */}
                             <button
                                 class="navbar-toggler"
                                 data-toggle="collapse"
@@ -93,24 +94,21 @@ class Profile extends Component {
                             >
                                 <span class="navbar-toggler-icon"></span>
                             </button>
-                            <div
-                                class="navbar-collapse collapse"
-                                id="navbarContent"
-                            >
+                            <div class="navbar-collapse collapse" id="navbarContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
                                         <a class="nav-link" href="/">
                                             HOME
                                         </a>
                                     </li>
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="/log-in">
-                                            LOG IN
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/events">
+                                            EVENTS
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/past-events">
-                                            SIGN UP
+                                        <a class="nav-link" href="/log-in">
+                                            LOG OUT
                                         </a>
                                     </li>
                                 </ul>
@@ -118,25 +116,108 @@ class Profile extends Component {
                         </div>
                     </nav>
                 </header>
+                <section id="intro" data-aos="zoom-out">
+                    <Row>
+                        {/* Side bar */}
+                        <Col sm={3} style={{ backgroundColor: "#f5eaf6" }}>
+                            <header class="section-header" style={{ marginTop: "5%" }}>
+                                <h3>User Dashboard</h3>
+                            </header>
+                            <div class="text-center">
+                                <a href='/new-event'>
+                                    <button class="main-btn" type="submit" >
+                                        Log Out
+                                    </button>
+                                </a>
+                            </div>
+                        </Col>
+                        {/* Post details */}
+                        <Col sm={8}>
+                            <div class="text-right">
+                                <OverlayTrigger
+                                    key="bottom"
+                                    placement="bottom"
+                                    overlay={
+                                        <Tooltip id="bottom">
+                                            Create New Event
+                                        </Tooltip>
+                                    }
+                                >
+                                    <a href='/new-event'>
+                                        <button class="main-btn" type="submit" >
+                                            +
+                                        </button>
+                                    </a>
+                                </OverlayTrigger>
+                            </div>
+                            {/* Published Posts */}
+                            <Col>
+                                {/* <Col sm>sm=true sm=true</Col> */}
+                                <div class="text-right">
+                                    <header class="section-header">
+                                        <h4>Posts</h4>
+                                    </header>
+                                </div>
+                                <div id="cards_landscape_wrap-2">
+                                    <div class="row justify-content-center">
+                                        {this.state.userEvents.map(
+                                            event =>
+                                                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                                                    <div class="card-flyer">
+                                                        <div class="text-box">
+                                                            <div class="image-box">
+                                                                <img src={event.imageUrl} alt="" />
+                                                            </div>
+                                                            <div class="text-container">
+                                                                <h6>{event.title}</h6>
+                                                                <p>{event.description}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </Col>
+                            {/* Drafts Posts */}
+                            <Col>
+                                <header class="section-header">
+                                    <h4 style={{ paddingTop: 50 }}>Drafts</h4>
+                                </header>
+                                <div id="cards_landscape_wrap-2">
+                                    <div class="row justify-content-center">
+                                        {this.state.userDraftEvents.map(
+                                            event =>
+                                                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                                                    <div class="card-flyer">
+                                                        <div class="text-box">
+                                                            <div class="image-box">
+                                                                <img src={event.imageUrl} alt="" />
+                                                            </div>
+                                                            <div class="text-container">
+                                                                <h6>{event.title}</h6>
+                                                                <p>{event.description}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </Col>
 
-                <section id="intro" class="container" data-aos="zoom-out">
-                    <header class="section-header" style={{ marginTop: "5%" }}>
-                        <h3>User Dashboard</h3>
-                    </header>
+                        </Col>
+                    </Row>
+
+
                     {this.state.loading ? (
                         <div class={`alert ${this.state.success ? "alert-success" : "alert-danger"}`} role="alert">
                             {this.state.message}  {this.state.success ? '' : <a href="/sign-up" class="alert-link">Register Here.</a>}
                         </div>
                     ) : ('')
                     }
-                    <div class="text-center">
-                        <a href='/new-event'>
-                            <button class="main-btn" type="submit" >
-                             Create New Event
-                            </button>
-                        </a>
-                    </div>
-                    <UserEvents />
+                    {/* <UserEvents /> */}
+
                 </section>
             </div>
         );
