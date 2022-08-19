@@ -1,8 +1,8 @@
 # "Volunteer Up Community" To Protect The World 🌏🙌
 
-Every day, when I am stepped out of the house, I see so many people and the environment, that need the help of youth citizens like me. So I gave a thought on this special opportunity to build this platform called "**Volunteer Up Community**" where the people can volunteer to help each other and make a beautiful world.
+Every day when I go outside, I witness several individuals and environmental circumstances that want the attention of young people like myself. In light of this unique opportunity, I decided to develop the "**Volunteer Up Community**" platform, where individuals can volunteer their time to make the world a better place.
 
-> _POV: Some volunteering platforms have limitations. Overcoming those limitations is the major aspect since this is a free open source project that anybody can contribute to and access from anywhere._
+> _POV: Since this is a free open source project that anybody may access from anywhere and contribute to, getting around such constraint is the major objective._
 
 However, this platform displays the volunteering events that have been created by one of the volunteers to gather the other volunteers too. Event details like the place are mentioned separately. To create the events the volunteer must register and log into the system. Because always be sure to provide the true information. So I used JWT to keep the system information secure.
 
