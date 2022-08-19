@@ -227,62 +227,17 @@ const getEventsByUserId = async (req, res) => {
     }
 };
 
-const getEventsNearMe = async (req, res) => {
-    try {
-        const lon = Number(req.query.lon);
-        const lat = Number(req.query.lat);
-        const distanceInKm = Number(req.query.distanceInKm) ?? 10;
-
-        const { page, limit } = req.query;
-
-        const { page: offset, limit: count } = preparePagination(page, limit);
-
-        // Fetch all events in KM radius from the location supplied
-        const eventsNearMe = await eventRepository
-            .search()
-            .where('locationPoint')
-            .inRadius(
-                (circle) => circle.origin(lon, lat).radius(Number(distanceInKm)).km
-            )
-            .sortDescending('createdAt')
-            .return.page(offset, count);
-
-        // Get the total number of events according to the search queries in the DB
-        const totalEvents = await eventRepository
-            .search()
-            .where('locationPoint')
-            .inRadius(
-                (circle) => circle.origin(lon, lat).radius(Number(distanceInKm)).km
-            )
-            .return.count();
-
-        const totalPages = getTotalPages(totalEvents, count);
-
-        return res.status(200).send({
-            error: false,
-            message: 'Here are the events happening near you.',
-            data: {
-                eventsNearMe,
-                totalEvents,
-                totalPages,
-            },
-        });
-    } catch (error) {
-        return res.status(500).send({
-            error: true,
-            message: `Server error, please try again later. ${error}`,
-        });
-    }
-};
-
 const searchEvents = async (req, res) => {
     try {
         const searchKey = Object.keys(req.query)[0];
         const searchValue = Object.values(req.query)[0];
 
+        console.log("req.query", req)
+
         const { page, limit } = req.query;
         const { page: offset, limit: count } = preparePagination(page, limit);
 
+        // TODO: improve this one 
         if (!searchKey) {
             return await getAllEvents(req, res);
         }
@@ -291,10 +246,6 @@ const searchEvents = async (req, res) => {
         let searchResult;
         if (searchKey && searchKey.toLowerCase() === 'category') {
             searchResult = await searchByCategory(searchValue.toLowerCase(), offset, count);
-        }
-
-        if (searchKey && searchKey.toLowerCase() === 'title') {
-            searchResult = await searchByTitle(searchValue.toLowerCase(), offset, count);
         }
 
         return res.status(200).send({
@@ -316,34 +267,14 @@ const searchByCategory = async (category, offset, count) => {
         .search()
         .where('category')
         .eq(category)
+        .where('visibility')
+        .equal(true)
         .sortDescending('createdAt')
         .return.page(offset, count);
     const totalEvents = await eventRepository
         .search()
         .where('category')
         .eq(category)
-        .return.count();
-    const totalPages = getTotalPages(totalEvents, count);
-
-    return {
-        events,
-        totalEvents,
-        totalPages,
-    };
-};
-
-// Perform full text search on the title field
-const searchByTitle = async (title, offset, count) => {
-    const events = await eventRepository
-        .search()
-        .where('title')
-        .match(title)
-        .sortDescending('createdAt')
-        .return.page(offset, count);
-    const totalEvents = await eventRepository
-        .search()
-        .where('title')
-        .match(title)
         .return.count();
     const totalPages = getTotalPages(totalEvents, count);
 
@@ -361,6 +292,5 @@ export {
     deleteEventById,
     getEventsByUserId,
     getDraftEventsByUserId,
-    getEventsNearMe,
     searchEvents,
 };

@@ -119,7 +119,7 @@ class Profile extends Component {
                 <section id="intro" data-aos="zoom-out">
                     <Row>
                         {/* Side bar */}
-                        <Col sm={3} style={{ backgroundColor: "#f5eaf6" }}>
+                        <Col sm={3} style={{ backgroundColor: "#06a17f31" }}>
                             <header class="section-header" style={{ marginTop: "5%" }}>
                                 <h3>User Dashboard</h3>
                             </header>
