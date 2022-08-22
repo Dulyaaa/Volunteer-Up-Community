@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
 import AuthService from '../services/auth';
-import logo from '../assets/logo.png';
-import pic from '../assets/login.gif';
+import logo from '../assets/logos.png';
+import pic from '../assets/login.jpg';
 
 const initialState = {
     email: "",
@@ -119,7 +119,7 @@ class LogIn extends Component {
                         <Card.Body>
                             <Row>
                                 <Col>
-                                    <Image src={pic} thumbnail style={{ border: "none", height: 300 }} />
+                                    <Image src={pic} thumbnail style={{ border: "none", height: 300}} />
                                 </Col>
                                 <Col>
                                     <div className="submit-form" style={{ width: 350, textAlign: "left", color: "grey", marginTop: "2%", marginLeft: "7%" }}>

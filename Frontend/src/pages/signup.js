@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
 import AuthService from '../services/auth'
-import pic from '../assets/signup.gif';
-import logo from '../assets/logo.png';
+import pic from '../assets/signup.jpg';
+import logo from '../assets/logos.png';
 
 const initialState = {
     firstName: "",

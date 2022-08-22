@@ -1,4 +1,4 @@
-import logo from '../assets/logo.png';
+import logo from '../assets/logos.png';
 import backgroundImage from '../assets/footer-topography.svg'
 
 

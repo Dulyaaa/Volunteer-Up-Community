@@ -1,5 +1,5 @@
-import gif from '../../assets/main.gif'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logos.png'
+import main from '../../assets/main.jpg'
 import WeAre from './weAre'
 
 export default function Home() {
@@ -56,7 +56,7 @@ export default function Home() {
             <section id="intro" class="clearfix">
                 <div class="container" data-aos="fade-up">
                     <div class="intro-img" data-aos="zoom-out" data-aos-delay="200">
-                        <img src={gif} alt="" class="img-fluid" />
+                        <img src={main} alt="" class="img-fluid" />
                     </div>
                     <div class="intro-info" data-aos="zoom-in" data-aos-delay="100">
                         <h2>Volunteer Up Community</h2>

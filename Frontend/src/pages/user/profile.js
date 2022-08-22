@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { OverlayTrigger, Row, Col, Tooltip, Table } from 'react-bootstrap'
+import { OverlayTrigger, Row, Col, Tooltip, Image } from 'react-bootstrap'
 import AuthService from '../../services/auth'
 import EventService from '../../services/event'
-import UserEvents from './userEvents'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logos.png'
+import NoData from '../../assets/nodata.png'
 
 const initialState = {
     userEvents: [],
@@ -121,7 +121,7 @@ class Profile extends Component {
                         {/* Side bar */}
                         <Col sm={3} style={{ backgroundColor: "#06a17f31" }}>
                             <header class="section-header" style={{ marginTop: "5%" }}>
-                                <h3>User Dashboard</h3>
+                                <h3>Profile</h3>
                             </header>
                             <div class="text-center">
                                 <a href='/new-event'>
@@ -155,38 +155,46 @@ class Profile extends Component {
                                 {/* <Col sm>sm=true sm=true</Col> */}
                                 <div class="text-right">
                                     <header class="section-header">
-                                        <h4>Posts</h4>
+                                        <h4>Published</h4>
                                     </header>
                                 </div>
                                 <div id="cards_landscape_wrap-2">
                                     <div class="row justify-content-center">
-                                        {this.state.userEvents.map(
-                                            event =>
-                                                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                                                    <div class="card-flyer">
-                                                        <div class="text-box">
-                                                            <div class="image-box">
-                                                                <img src={event.imageUrl} alt="" />
-                                                            </div>
-                                                            <div class="text-container">
-                                                                <h6>{event.title}</h6>
-                                                                <p>{event.description}</p>
+                                        {this.state.userEvents < 0 ?
+                                            this.state.userEvents.map(
+                                                event =>
+                                                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                                                        <div class="card-flyer">
+                                                            <div class="text-box">
+                                                                <div class="image-box">
+                                                                    <img src={event.imageUrl} alt="" />
+                                                                </div>
+                                                                <div class="text-container">
+                                                                    <h6>{event.title}</h6>
+                                                                    <p>{event.description}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                        )}
+                                            )
+                                            : <div>
+                                                <Image src={NoData} thumbnail style={{ border: "none", height: 100 }} />
+                                                <header class="section-header">
+                                                    <p>No Published Posts</p>
+                                                </header>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </Col>
                             {/* Drafts Posts */}
                             <Col>
                                 <header class="section-header">
-                                    <h4 style={{ paddingTop: 50 }}>Drafts</h4>
+                                    <h4 style={{ paddingTop: 50 }}>Drafted</h4>
                                 </header>
                                 <div id="cards_landscape_wrap-2">
                                     <div class="row justify-content-center">
-                                        {this.state.userDraftEvents.map(
+                                        {this.state.userDraftEvents < 0 ? this.state.userDraftEvents.map(
                                             event =>
                                                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                                     <div class="card-flyer">
@@ -201,7 +209,14 @@ class Profile extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
-                                        )}
+                                        )
+                                            : <div>
+                                                <Image src={NoData} thumbnail style={{ border: "none", height: 100 }} />
+                                                <header class="section-header">
+                                                    <p>No Draft Posts</p>
+                                                </header>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </Col>
