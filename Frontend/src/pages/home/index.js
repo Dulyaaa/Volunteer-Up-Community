@@ -61,18 +61,18 @@ export default function Home() {
                     <div class="intro-info" data-aos="zoom-in" data-aos-delay="100">
                         <h2>Volunteer Up Community</h2>
                         <p>
-                            We are a group of enthusiastic volunteers who
-                            believe in the usage and contribution of helping
-                            each others. Our community's primary objective is
+                            <b>"Volunteer Up Community"</b> is a group of enthusiastic
+                            volunteers who believe in the usage and contribution
+                            of helping each others. This community's primary objective is
                             to promote, inspire and diversify the usage of
-                            helping each other amongst empowered men & women.
+                            helping each other amongst empowered men & women for
+                            <b> Saving & Loving The World</b>.
                         </p>
-                    
-                            <a href="/sign-up" rel="no referrer">
-                                <button class="main-btn" type="submit">
-                                    Become A Volunteer
-                                </button>
-                            </a>
+                        <a href="/sign-up" rel="no referrer">
+                            <button class="main-btn" type="submit">
+                                Become A Volunteer
+                            </button>
+                        </a>
                     </div>
                 </div>
             </section>
