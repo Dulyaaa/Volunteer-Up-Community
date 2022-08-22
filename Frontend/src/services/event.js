@@ -25,13 +25,11 @@ class EventService {
         return http.delete(`/api/v1/events/delete/${id}`);
     }
 
-    searchEvents() {
-        return http.get("/api/v1/events/search");
+    searchEvents(data) {
+        return http.get(`/api/v1/events/search?category=${data}`);
     }
 
-    
-
-
+    // http://localhost:8080/api/v1/events/search?category=fourth
 
 
     get(id) {

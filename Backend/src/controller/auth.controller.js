@@ -44,10 +44,11 @@ const createAccount = async (req, res) => {
         const token = await generateToken({ userKey: `user:${email}`, userId })
 
         if (createUser && typeof createUser === 'number') {
+            const user = await redisClient.hgetall(`user:${email}`);
             return res.status(201).send({
                 error: false,
                 message: 'Account successfully created.',
-                data: { token },
+                data: { token, user },
             });
         }
     } catch (error) {
@@ -89,7 +90,7 @@ const login = async (req, res) => {
         return res.status(200).send({
             error: false,
             message: 'Login successfully. You will redirect shortly.',
-            data: { token },
+            data: { token, user },
         });
     } catch (error) {
         return `Server error, please try again later. ${error}`;

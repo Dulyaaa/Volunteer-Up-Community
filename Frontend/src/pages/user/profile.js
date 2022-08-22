@@ -8,25 +8,50 @@ import NoData from '../../assets/nodata.png'
 const initialState = {
     userEvents: [],
     userDraftEvents: [],
+    userDetails: {},
+    token: "",
+    alert:""
 }
 
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.getUserEvents = this.getUserEvents.bind(this);
-        this.getUserDraftEvents = this.getUserDraftEvents.bind(this);
+        this.getUserDraftEvents = this.getUserDraftEvents.bind(this); 
+        this.getUserSession = this.getUserSession.bind(this);
+        this.logOut = this.logOut.bind(this); 
         this.state = initialState;
     }
 
     componentDidMount() {
         this.getUserEvents();
         this.getUserDraftEvents();
+        this.getUserSession();
+    }
+
+    getUserSession = () => {
+        const data = AuthService.getCurrentUser();
+        this.setState({
+            token: data.data.token,
+            userDetails: data.data.user
+        });
+    }
+
+    logOut = () => {
+        AuthService.logout();
+        this.setState({
+            token: '',
+            userDetails: '',
+            alert: "Logging Out."
+        });
+        setTimeout(() => {
+            this.props.history.push('/');
+        }, 1200);
     }
 
     getUserEvents = () => {
-        const token = AuthService.getCurrentUser();
         const config = {
-            headers: { Authorization: `Bearer ${token.data.token}` }
+            headers: { Authorization: `Bearer ${this.state.token}` }
         };
         EventService.getByUser(config)
             .then(response => {
@@ -42,7 +67,6 @@ class Profile extends Component {
                     success: false
                 });
                 console.log(error.response);
-                // alert(error.response.data.message);
             });
     }
 
@@ -65,7 +89,6 @@ class Profile extends Component {
                     success: false
                 });
                 console.log(error.response);
-                // alert(error.response.data.message);
             });
     }
 
@@ -107,7 +130,7 @@ class Profile extends Component {
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/log-in">
+                                        <a class="nav-link" onClick={this.logOut}>
                                             LOG OUT
                                         </a>
                                     </li>
@@ -117,15 +140,24 @@ class Profile extends Component {
                     </nav>
                 </header>
                 <section id="intro" data-aos="zoom-out">
+                    {this.state.alert ? (
+                    <div class={`alert ${"alert-success" }`} role="alert">
+                        {this.state.alert}
+                    </div>
+                    ) : ('')
+                    }
                     <Row>
                         {/* Side bar */}
-                        <Col sm={3} style={{ backgroundColor: "#06a17f31" }}>
-                            <header class="section-header" style={{ marginTop: "5%" }}>
-                                <h3>Profile</h3>
+                        <Col sm={3} style={{ backgroundColor: "#d2d2d2" }}>
+                            <header class="section-header" style={{ marginTop: "5%", textAlign: "center" }}>
+                                <Image fluid="true" roundedCircle="true" src="https://www.ysm.ca/wp-content/uploads/2020/02/default-avatar.jpg" thumbnail style={{ border: "none", height: 150, marginBottom: 30 }} />
+                                <h3>{this.state.userDetails.displayName}</h3>
+                                <p>Email: {this.state.userDetails.email}</p>
+                                <p>Full Name: {this.state.userDetails.firstName} {this.state.userDetails.lastName} </p>
                             </header>
                             <div class="text-center">
-                                <a href='/new-event'>
-                                    <button class="main-btn" type="submit" >
+                                <a>
+                                    <button class="main-btn" type="submit" onClick={this.logOut}>
                                         Log Out
                                     </button>
                                 </a>
@@ -180,7 +212,7 @@ class Profile extends Component {
                                             : <div>
                                                 <Image src={NoData} thumbnail style={{ border: "none", height: 100 }} />
                                                 <header class="section-header">
-                                                    <p>No Published Posts</p>
+                                                    <p>No Publish Posts Yet</p>
                                                 </header>
                                             </div>
                                         }
@@ -213,7 +245,7 @@ class Profile extends Component {
                                             : <div>
                                                 <Image src={NoData} thumbnail style={{ border: "none", height: 100 }} />
                                                 <header class="section-header">
-                                                    <p>No Draft Posts</p>
+                                                    <p>No Draft Posts Yet</p>
                                                 </header>
                                             </div>
                                         }
@@ -223,16 +255,6 @@ class Profile extends Component {
 
                         </Col>
                     </Row>
-
-
-                    {this.state.loading ? (
-                        <div class={`alert ${this.state.success ? "alert-success" : "alert-danger"}`} role="alert">
-                            {this.state.message}  {this.state.success ? '' : <a href="/sign-up" class="alert-link">Register Here.</a>}
-                        </div>
-                    ) : ('')
-                    }
-                    {/* <UserEvents /> */}
-
                 </section>
             </div>
         );

@@ -5,7 +5,6 @@ import {
     getEventById,
     getEventsByUserId,
     getDraftEventsByUserId,
-    getEventsNearMe,
     searchEvents,
     deleteEventById
 } from '../controller/event.controller.js';
@@ -18,7 +17,6 @@ eventRouter.get('', getAllEvents);
 eventRouter.get('/users', authGuard, getEventsByUserId); 
 eventRouter.get('/draft', authGuard, getDraftEventsByUserId); 
 eventRouter.delete('/delete/:eventId', deleteEventById);
-eventRouter.get('/locations', getEventsNearMe);
 eventRouter.get('/search', searchEvents);
 eventRouter.get('/:eventId', getEventById); 
 
