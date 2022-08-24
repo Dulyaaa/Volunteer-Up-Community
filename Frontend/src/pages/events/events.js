@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import { Modal, Button, Figure } from 'react-bootstrap';
+import { ImLocation } from "react-icons/im";
+import { MdDateRange, MdOutlineDateRange } from "react-icons/md";
+import { BiCategory } from "react-icons/bi";
 import EventService from '../../services/event';
 import logo from '../../assets/logos.png'
 
@@ -7,11 +11,14 @@ export default class Events extends Component {
         super(props);
         this.state = {
             data: [],
-            searchEvents: ""
+            searchEvents: "",
+            selectedEvent: {},
+            show: false
         };
         this.receivedData = this.receivedData.bind(this);
         this.onChangeSearchEvents = this.onChangeSearchEvents.bind(this);
         this.searchEvents = this.searchEvents.bind(this);
+        this.handleModal = this.handleModal.bind(this);
     }
 
     componentDidMount() {
@@ -33,7 +40,6 @@ export default class Events extends Component {
         });
     }
 
-
     searchEvents = () => {
         console.log(this.state.searchEvents)
         EventService.searchEvents(this.state.searchEvents).then(res => {
@@ -43,6 +49,10 @@ export default class Events extends Component {
         }).catch(e => {
             console.log(e);
         });
+    }
+
+    handleModal = (event) => {
+        this.setState({ show: !this.state.show, selectedEvent: event })
     }
 
     render() {
@@ -107,7 +117,7 @@ export default class Events extends Component {
                                 {this.state.data.map(
                                     event =>
                                         <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" >
-                                            <div class="card-flyer">
+                                            <div class="card-flyer" onClick={() => this.handleModal(event)}>
                                                 <div class="text-box">
                                                     <div class="image-box">
                                                         <img src={event.imageUrl} alt="" />
@@ -124,6 +134,39 @@ export default class Events extends Component {
                             </div>
                         </div>
                     </div>
+                    <Modal
+                        show={this.state.show}
+                        onHide={() => this.handleModal(this.state.selectedEvent)}
+                        size="lg"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title id="contained-modal-title-vcenter">
+                                {this.state.selectedEvent.title}
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Figure class="text-center">
+                                <Figure.Image
+                                    alt="171x180"
+                                    src={this.state.selectedEvent.imageUrl}
+                                />
+                                <Figure.Caption>
+                                    {this.state.selectedEvent.description}
+                                </Figure.Caption>
+                            </Figure>
+                            <p>
+                                <BiCategory />{' '}<strong>Category: </strong>{this.state.selectedEvent.category}
+                                <br /><ImLocation />{' '}<strong>Location: </strong>{this.state.selectedEvent.venue}
+                                <br /><MdDateRange />{' '}<strong>Start Date: </strong>{new Date(this.state.selectedEvent.startDate).toDateString()}
+                                <br /><MdOutlineDateRange />{' '}<strong>End Date: </strong>{new Date(this.state.selectedEvent.endDate).toDateString()}
+                            </p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={() => this.handleModal(this.state.selectedEvent)}>Okay</Button>
+                        </Modal.Footer>
+                    </Modal>
                 </section >
             </div >
         )

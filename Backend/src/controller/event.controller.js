@@ -16,7 +16,7 @@ const createEvent = async (req, res) => {
         } = req.body;
 
         const event = await eventRepository.createAndSave({
-            title: title.toLowerCase(),
+            title: title,
             description,
             category: category.toLowerCase(),
             venue,
