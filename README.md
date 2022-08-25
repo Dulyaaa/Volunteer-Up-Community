@@ -1,10 +1,18 @@
 # "Volunteer Up Community" To Protect The World 🌏🙌
 
-Every day when I go outside, I witness several individuals and environmental circumstances that want the attention of young people like myself. In light of this unique opportunity, I decided to develop the "**Volunteer Up Community**" platform, where individuals can volunteer their time to make the world a better place.
+This platform highlights the volunteer events one of the volunteers has organized to bring together other volunteers. The venue and other specifics of the event are listed individually. The volunteer must register and log into the system to create the event because it is always essential to provide accurate information. Nevertheless, the system has the following capabilities:
+* View All Published Events
+* Search Published Events
+* Register, Log In & Log Out 
+* Retrieve Published & Drafted Events By Volunteer
+* Create New Events (As either Publish or Save as Draft) 
+* Delete Events
 
-> _POV: Since this is a free open source project that anybody may access from anywhere and contribute to, getting around such constraint is the major objective._
+Showcases of final implementation of the system.
 
-However, this platform displays the volunteering events that have been created by one of the volunteers to gather the other volunteers too. Event details like the place are mentioned separately. To create the events the volunteer must register and log into the system. Because always be sure to provide the true information. So I used JWT to keep the system information secure.
+<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vuqbu0d6i571fynd0h3q.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vuqbu0d6i571fynd0h3q.png" width="100%" height="auto"></a>
+<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/w6ehuvxqc1a3b95x4s39.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/w6ehuvxqc1a3b95x4s39.png" width="50%" height="auto"></a><a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/gn1y2slpj5txaugywqxq.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/gn1y2slpj5txaugywqxq.png" width="50%" height="auto"></a>
+
 
 ### Technology 
 * ![ReactJs](https://img.shields.io/badge/FrontEnd-ReactJs-blue)
