@@ -112,18 +112,6 @@ class NewEvent extends Component {
                                                     name="startDate"
                                                 />
                                             </div>
-                                            <div className="form-group">
-                                                <label htmlFor="venue" >Venue</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="venue"
-                                                    required
-                                                    value={this.state.venue}
-                                                    onChange={this.onChange}
-                                                    name="venue"
-                                                />
-                                            </div>
                                         </Col>
                                         <Col>
                                             <div className="form-group">
@@ -163,6 +151,18 @@ class NewEvent extends Component {
                                                 />
                                             </div>
                                             <div className="form-group">
+                                                <label htmlFor="venue" >Venue</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="venue"
+                                                    required
+                                                    value={this.state.venue}
+                                                    onChange={this.onChange}
+                                                    name="venue"
+                                                />
+                                            </div>
+                                            <div className="form-group">
                                                 <label htmlFor="endDate" >End Date</label>
                                                 <input
                                                     type="date"
@@ -174,22 +174,22 @@ class NewEvent extends Component {
                                                     name="endDate"
                                                 />
                                             </div>
-                                            <Row style={{ paddingTop: 35, justifyContent: "center" }}>
-                                                <div class="text-center">
-                                                    <a> <button class="main-btn" type="submit" onClick={() => (this.state.visibility = true)}>
-                                                        <RiSave2Fill
-                                                            size={25}
-                                                            style={{ textAlign: "center" }} />
-                                                    </button></a>
-                                                    {' '}
-                                                    <a><button class="main-btn" type="submit" onClick={() => (this.state.visibility = false)}>
-                                                        <RiDraftFill
-                                                            size={25}
-                                                            style={{ textAlign: "center" }} />
-                                                    </button></a>
-                                                </div>
-                                            </Row>
                                         </Col>
+                                    </Row>
+                                    <Row style={{ paddingTop: 35, justifyContent: "center" }}>
+                                        <div class="text-center">
+                                            <a> <button class="main-btn" type="submit" onClick={() => (this.state.visibility = true)}>
+                                                <RiSave2Fill
+                                                    size={25}
+                                                    style={{ textAlign: "center" }} />
+                                            </button></a>
+                                            {' '}
+                                            <a><button class="main-btn" type="submit" onClick={() => (this.state.visibility = false)}>
+                                                <RiDraftFill
+                                                    size={25}
+                                                    style={{ textAlign: "center" }} />
+                                            </button></a>
+                                        </div>
                                     </Row>
                                 </form>
                             </div>

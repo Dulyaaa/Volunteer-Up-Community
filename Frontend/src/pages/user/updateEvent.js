@@ -168,18 +168,6 @@ class UpdateEvent extends Component {
                                                     name="startDate"
                                                 />
                                             </div>
-                                            <div className="form-group">
-                                                <label htmlFor="venue" >Venue</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="venue"
-                                                    required
-                                                    value={this.state.venue}
-                                                    onChange={this.onChange}
-                                                    name="venue"
-                                                />
-                                            </div>
                                         </Col>
                                         <Col>
                                             <div className="form-group">
@@ -216,6 +204,18 @@ class UpdateEvent extends Component {
                                                     value={this.state.description}
                                                     onChange={this.onChange}
                                                     name="description"
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="venue" >Venue</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="venue"
+                                                    required
+                                                    value={this.state.venue}
+                                                    onChange={this.onChange}
+                                                    name="venue"
                                                 />
                                             </div>
                                             <div className="form-group">
