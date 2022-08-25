@@ -17,15 +17,9 @@ Showcases of final implementation of the system.
 
 Here's a short video that explains the project and how it uses Redis:
 
-
-[![Embed your YouTube video](https://i.ytimg.com/vi/vyxdC1qK4NE/maxresdefault.jpg)](https://www.youtube.com/watch?v=vyxdC1qK4NE)
-
-Here's a short video that explains the project and how it uses Redis:
-
 [![Watch the video on YouTube](https://github.com/redis-developer/basic-analytics-dashboard-redis-bitmaps-nodejs/blob/cb8c2178a6c5a019c42aa91739ad9bfdbb2d558c/docs/YTThumbnail.png)](https://www.youtube.com/watch?v=Ugym4yUeIhA)
 
 ## How it works
-
 ### How the data is stored:
 
 Refer to [this example](https://github.com/redis-developer/basic-analytics-dashboard-redis-bitmaps-nodejs#how-the-data-is-stored) for a more detailed example of what you need for this section.
@@ -35,7 +29,6 @@ Refer to [this example](https://github.com/redis-developer/basic-analytics-dashb
 Refer to [this example](https://github.com/redis-developer/basic-analytics-dashboard-redis-bitmaps-nodejs#how-the-data-is-accessed) for a more detailed example of what you need for this section.
 
 ## How to run it locally?
-
 ### Prerequisites
 
 - React - v18.2.0
@@ -98,12 +91,6 @@ To make deploys work, you need to create free account on [Redis Cloud](https://r
 
 
 # Redis Analytics Bitmaps demo
-
-# Overview video
-
-Here's a short video that explains the project and how it uses Redis:
-
-[![Watch the video on YouTube](https://github.com/redis-developer/basic-analytics-dashboard-redis-bitmaps-nodejs/blob/cb8c2178a6c5a019c42aa91739ad9bfdbb2d558c/docs/YTThumbnail.png)](https://www.youtube.com/watch?v=Ugym4yUeIhA)
 
 ## How it works
 ### How the data is stored:
