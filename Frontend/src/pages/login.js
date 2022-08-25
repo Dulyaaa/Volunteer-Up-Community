@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Card, Image } from 'react-bootstrap';
-import AuthService from '../services/auth';
+import AuthService from '../service/auth.service';
 import logo from '../assets/logos.png';
 import pic from '../assets/login.jpg';
 

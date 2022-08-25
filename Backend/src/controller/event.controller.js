@@ -8,7 +8,6 @@ const createEvent = async (req, res) => {
             description,
             category,
             venue,
-            locationPoint,
             startDate,
             endDate,
             imageUrl,
@@ -20,7 +19,6 @@ const createEvent = async (req, res) => {
             description,
             category: category.toLowerCase(),
             venue,
-            locationPoint,
             startDate,
             endDate,
             imageUrl,
@@ -291,7 +289,6 @@ const updateEvent = async (req, res) => {
             description,
             category,
             venue,
-            locationPoint,
             startDate,
             endDate,
             imageUrl,
@@ -302,7 +299,6 @@ const updateEvent = async (req, res) => {
         eventDetails.description = description
         eventDetails.category = category.toLowerCase()
         eventDetails.venue = venue
-        eventDetails.locationPoint = locationPoint
         eventDetails.startDate = startDate
         eventDetails.endDate = endDate
         eventDetails.imageUrl = imageUrl

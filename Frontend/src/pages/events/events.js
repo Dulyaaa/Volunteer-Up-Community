@@ -3,7 +3,7 @@ import { Modal, Button, Figure } from 'react-bootstrap';
 import { ImLocation } from "react-icons/im";
 import { MdDateRange, MdOutlineDateRange } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
-import EventService from '../../services/event';
+import EventService from '../../service/event.service';
 import logo from '../../assets/logos.png'
 
 export default class Events extends Component {
@@ -41,13 +41,14 @@ export default class Events extends Component {
     }
 
     searchEvents = () => {
-        EventService.searchEvents(this.state.searchEvents).then(res => {
-            this.setState({
-                data: res.data.data.events
+        EventService.searchEvents(this.state.searchEvents)
+            .then(res => {
+                this.setState({
+                    data: res.data.data.events
+                });
+            }).catch(e => {
+                console.log(e);
             });
-        }).catch(e => {
-            console.log(e);
-        });
     }
 
     handleModal = (event) => {

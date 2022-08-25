@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Image, Form } from 'react-bootstrap';
+import { Row, Col, Card, Image } from 'react-bootstrap';
 import { RiDraftFill, RiSave2Fill, RiDeleteBin2Fill } from "react-icons/ri";
-import AuthService from '../../services/auth'
-import EventService from '../../services/event'
-import logo from '../../assets/logos.png';
-import pic from '../../assets/login.gif';
+import EventService from '../../service/event.service';
 
 const initialState = {
     entityId: "",
@@ -12,7 +9,6 @@ const initialState = {
     description: "",
     category: "",
     venue: "",
-    locationPoint: "",
     startDate: "",
     endDate: "",
     imageUrl: "",
@@ -40,12 +36,10 @@ class UpdateEvent extends Component {
     }
 
     onChangeVisibility = (visibility) => {
-        this.setState({
-            visibility: visibility,
-        });
+        this.setState({ visibility: visibility });
     }
 
-    getEvent(id) {
+    getEvent = (id) => {
         EventService.getEventById(id)
             .then(response => {
                 this.setState({
@@ -54,7 +48,6 @@ class UpdateEvent extends Component {
                     description: response.data.data.description,
                     category: response.data.data.category,
                     venue: response.data.data.venue,
-                    locationPoint: response.data.data.locationPoint,
                     startDate: response.data.data.startDate,
                     endDate: response.data.data.endDate,
                     imageUrl: response.data.data.imageUrl,
@@ -63,10 +56,8 @@ class UpdateEvent extends Component {
                     loading: true,
                     success: true
                 });
-                console.log(response.data);
             })
             .catch(error => {
-                console.log(error);
                 this.setState({
                     loading: true,
                     message: error.response.data.message,
@@ -84,7 +75,6 @@ class UpdateEvent extends Component {
                 description: this.state.description,
                 category: this.state.category,
                 venue: this.state.venue,
-                locationPoint: this.state.locationPoint,
                 startDate: this.state.startDate,
                 endDate: this.state.endDate,
                 imageUrl: this.state.imageUrl,
@@ -226,18 +216,6 @@ class UpdateEvent extends Component {
                                                     value={this.state.description}
                                                     onChange={this.onChange}
                                                     name="description"
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="locationPoint">Location Point</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="locationPoint"
-                                                    required
-                                                    value={this.state.locationPoint}
-                                                    onChange={this.onChange}
-                                                    name="locationPoint"
                                                 />
                                             </div>
                                             <div className="form-group">

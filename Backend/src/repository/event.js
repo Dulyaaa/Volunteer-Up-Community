@@ -8,7 +8,6 @@ const eventSchema = new Schema(EventRepository, {
     description: { type: 'text' },
     category: { type: 'string' },
     venue: { type: 'string' },
-    locationPoint: { type: 'text' },
     startDate: { type: 'date', sortable: true },
     endDate: { type: 'date', sortable: true },
     imageUrl: { type: 'string' },

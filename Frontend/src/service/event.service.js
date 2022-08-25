@@ -1,7 +1,4 @@
-import axios from "axios";
 import http from "../API";
-
-const API_URL = "http://localhost:8080/api/v1/events";
 
 class EventService {
 
@@ -37,19 +34,6 @@ class EventService {
         return http.put(`/api/v1/events/update/${id}`, data);
     }
 
-
-
-    findByPlace(placeCity) {
-        return http.get(`/boardingPlace/search?placeCity=${placeCity}`);
-    }
-
-    getCount() {
-        return http.get("/boardingPlace/count");
-    }
-
-    update(id, data) {
-        return http.put(`/boardingPlace/update/${id}`, data);
-    }
-
 }
+
 export default new EventService();

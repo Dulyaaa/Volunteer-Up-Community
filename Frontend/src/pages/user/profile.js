@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Row, Col, Image } from 'react-bootstrap'
-import AuthService from '../../services/auth'
-import EventService from '../../services/event'
+import AuthService from '../../service/auth.service'
+import EventService from '../../service/event.service'
 import logo from '../../assets/logos.png'
 import NoData from '../../assets/nodata.png'
-import { RiDraftFill, RiSave2Fill, RiDeleteBack2Fill } from "react-icons/ri";
 
 const initialState = {
     userEvents: [],
@@ -55,7 +54,6 @@ class Profile extends Component {
                 this.setState({
                     userEvents: response.data.data.userEvents
                 });
-                console.log("userEvents", this.state.userEvents)
             })
             .catch((error) => {
                 this.setState({
@@ -63,7 +61,6 @@ class Profile extends Component {
                     message: error.response.data.message,
                     success: false
                 });
-                console.log(error.response);
             });
     }
 
@@ -81,7 +78,6 @@ class Profile extends Component {
                 this.setState({
                     userDraftEvents: response.data.data.userDraftEvents
                 });
-                console.log("userDraftEvents", this.state.userDraftEvents)
             })
             .catch((error) => {
                 this.setState({
@@ -89,13 +85,10 @@ class Profile extends Component {
                     message: error.response.data.message,
                     success: false
                 });
-                console.log(error.response);
             });
     }
 
-    navigateUpdatePage(accId) {
-        // console.log("Accessory ID:", accId);
-        // window.location = `/update/${accId}`
+    navigateUpdatePage = (accId) => {
         this.props.history.push("/update/" + accId);
     }
 
@@ -213,8 +206,7 @@ class Profile extends Component {
                                                             </div>
                                                         </div>
                                                     </div>
-                                            )
-                                        }
+                                            )}
                                     </div>
                                 </div>
                             </Col>
@@ -250,12 +242,10 @@ class Profile extends Component {
                                                             </div>
                                                         </div>
                                                     </div>
-                                            )
-                                        }
+                                            )}
                                     </div>
                                 </div>
                             </Col>
-
                         </Col>
                     </Row>
                 </section>

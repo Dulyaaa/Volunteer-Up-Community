@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, Image, Form } from 'react-bootstrap';
-import { RiDraftFill, RiSave2Fill, RiDeleteBack2Fill } from "react-icons/ri";
-import { MdCancel } from "react-icons/md";
-import AuthService from '../../services/auth'
-import EventService from '../../services/event'
-import logo from '../../assets/logos.png';
-import pic from '../../assets/login.gif';
+import { Row, Col, Card, Image } from 'react-bootstrap';
+import { RiDraftFill, RiSave2Fill } from "react-icons/ri";
+import AuthService from '../../service/auth.service'
+import EventService from '../../service/event.service'
 
 const initialState = {
     title: "",
     description: "",
     category: "",
     venue: "",
-    locationPoint: "",
     startDate: "",
     endDate: "",
     imageUrl: "",
@@ -27,44 +23,12 @@ class NewEvent extends Component {
         super(props);
         this.onChange = this.onChange.bind(this);
         this.createEvent = this.createEvent.bind(this);
-        this.getEvent = this.getEvent.bind(this);
         this.state = initialState;
-    }
-
-    componentDidMount() {
-        if (this.props.match.params.id) {
-            this.getEvent(this.props.match.params.id);
-        }
-    }
-
-    getEvent(id) {
-        EventService.getEventById(id)
-            .then(response => {
-                this.setState({
-                    title: response.data.title,
-                    description: response.data.description,
-                    category: response.data.category,
-                    venue: response.data.venue,
-                    locationPoint: response.data.locationPoint,
-                    startDate: response.data.startDate,
-                    endDate: response.data.endDate,
-                    imageUrl: response.data.imageUrl,
-                    visibility: response.data.visibility,
-                });
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-                this.setState({
-                    // submitted: false
-                });
-            });
     }
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
-
 
     createEvent = (e) => {
         e.preventDefault();
@@ -77,7 +41,6 @@ class NewEvent extends Component {
             description: this.state.description,
             category: this.state.category,
             venue: this.state.venue,
-            locationPoint: this.state.locationPoint,
             startDate: this.state.startDate,
             endDate: this.state.endDate,
             imageUrl: this.state.imageUrl,
@@ -103,25 +66,6 @@ class NewEvent extends Component {
             });
     }
 
-    deleteUserEvent = (id) => {
-        EventService.delete(id)
-            .then(response => {
-                this.setState({
-                    loading: true,
-                    message: response.data.message,
-                    success: true
-                });
-            })
-            .catch((error) => {
-                this.setState({
-                    loading: true,
-                    message: error.response.data.message,
-                    success: false
-                });
-                console.log(error.response);
-            });
-    }
-
     render() {
         const image = "https://affinityhealthclinic.ca/wp-content/uploads/2017/07/Image-Placeholder.jpg";
         return (
@@ -136,9 +80,6 @@ class NewEvent extends Component {
                         <header class="section-header" style={{ marginTop: "5%" }}>
                             <h3>Create New Event</h3>
                         </header>
-                        {/* <header class="section-header" style={{ marginTop: "5%" }}>
-                            <h3>Create New Event</h3>
-                        </header> */}
                         <Card.Body>
                             <div className="submit-form" style={{ textAlign: "left", color: "black" }}>
                                 <form onSubmit={(event) => this.createEvent(event)}>
@@ -219,18 +160,6 @@ class NewEvent extends Component {
                                                     value={this.state.description}
                                                     onChange={this.onChange}
                                                     name="description"
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="locationPoint" >Location Point</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="locationPoint"
-                                                    required
-                                                    value={this.state.locationPoint}
-                                                    onChange={this.onChange}
-                                                    name="locationPoint"
                                                 />
                                             </div>
                                             <div className="form-group">
