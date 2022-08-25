@@ -22,11 +22,69 @@ Here's a short video that explains the project and how it uses Redis:
 ## How it works
 ### How the data is stored:
 
-Refer to [this example](https://github.com/redis-developer/basic-analytics-dashboard-redis-bitmaps-nodejs#how-the-data-is-stored) for a more detailed example of what you need for this section.
+#### User creation
+
+* Before create the new user, check if the user with that email already exits or not by using `hgetall` by passing the email and returns the all fields (`firstName, lastName, displayName, email, password`) and values of the hash stored at key.
+* If the user is not exsits, generate the random userId using `ulid()` which will be used as the key in Redis. 
+* Hashed the password before store in Redis cloud using `hash()` method of `bcrypt` library.
+* Then create the user using `execute` command and as a `HSET` which sets feild in the hash stored at key to value (`user:${email}`).
+
+```js
+        // Create user account
+        const createUser = await redisClient.execute([
+            'HSET',
+            `user:${email}`,
+            'id',
+            `${userId}`,
+            'firstName',
+            `${firstName}`,
+            'lastName',
+            `${lastName}`,
+            'email',
+            `${email}`,
+            'password',
+            `${hashedPassword}`,
+            'displayName',
+            `${displayName}`,
+        ]);
+```
+
+#### Event creation
+
+* The event data is stored in various keys and various data types.
+    * Some of the keys are sortable like `startDate`, `endDate`, `createdAt`, `updatedAt`.  
+    * Data Types used:
+        * text
+        * string
+        * date
+        * boolean
+     * And saved the event schema as a `HASH`.
+        * So that, able to retrieve the data fastly. 
+```js
+    const eventSchema = new Schema(EventRepository, {
+    title: { type: 'text' },
+    description: { type: 'text' },
+    category: { type: 'string' },
+    venue: { type: 'string' },
+    startDate: { type: 'date', sortable: true },
+    endDate: { type: 'date', sortable: true },
+    imageUrl: { type: 'string' },
+    userId: { type: 'string' },
+    createdAt: { type: 'date', sortable: true },
+    updatedAt: { type: 'date', sortable: true },
+    visibility: { type: 'boolean' },
+}, {
+    dataStructure: 'HASH'
+});
+```
+The key for each event is auto generated when storing the data. That key is stored as `entityId`. 
 
 ### How the data is accessed:
 
-Refer to [this example](https://github.com/redis-developer/basic-analytics-dashboard-redis-bitmaps-nodejs#how-the-data-is-accessed) for a more detailed example of what you need for this section.
+#### User Data Retrieve
+```js 
+const user = await redisClient.hgetall(`user:${email}`);
+```
 
 ## How to run it locally?
 ### Prerequisites
