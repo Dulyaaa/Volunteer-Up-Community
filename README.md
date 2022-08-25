@@ -146,7 +146,7 @@ To make deploys work, you need to create free account on [Redis Cloud](https://r
     
     
     
-
+<!-- 
 
 # Redis Analytics Bitmaps demo
 
@@ -248,7 +248,7 @@ Is generated key like: `rab:{type}[:custom:{customName}][:user:{userId}][:source
     * E.g `SMEMBERS rab:set:action:buy:page:product2:timeSpan:2015-12`
 * Customers who bought Product1 and Product2: `SINTER rab:set:action:buy:page:product1:timeSpan:anytime rab:set:action:buy:page:product2:timeSpan:anytime`
 * Customer Retention (customers who bought on the different dates): `SMEMBERS rab:set:custom:retention-buy:timeSpan:anytime`
-``
+`` -->
 
 
 
