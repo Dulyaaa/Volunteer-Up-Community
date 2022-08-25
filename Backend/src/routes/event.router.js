@@ -6,7 +6,8 @@ import {
     getEventsByUserId,
     getDraftEventsByUserId,
     searchEvents,
-    deleteEventById
+    deleteEventById,
+    updateEvent
 } from '../controller/event.controller.js';
 import { authGuard } from '../middleware/index.js';
 
@@ -19,5 +20,6 @@ eventRouter.get('/draft', authGuard, getDraftEventsByUserId);
 eventRouter.delete('/delete/:eventId', deleteEventById);
 eventRouter.get('/search', searchEvents);
 eventRouter.get('/:eventId', getEventById); 
+eventRouter.put('/update/:eventId', updateEvent); 
 
 export { eventRouter };

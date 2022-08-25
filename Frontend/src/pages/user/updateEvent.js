@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Row, Col, Card, Image, Form } from 'react-bootstrap';
-import { RiDraftFill, RiSave2Fill, RiDeleteBack2Fill } from "react-icons/ri";
-import { MdCancel } from "react-icons/md";
+import { RiDraftFill, RiSave2Fill, RiDeleteBin2Fill } from "react-icons/ri";
 import AuthService from '../../services/auth'
 import EventService from '../../services/event'
 import logo from '../../assets/logos.png';
 import pic from '../../assets/login.gif';
 
 const initialState = {
+    entityId: "",
     title: "",
     description: "",
     category: "",
@@ -19,76 +19,105 @@ const initialState = {
     visibility: true,
     loading: false,
     message: "",
-    success: false
+    success: true,
 }
 
-class NewEvent extends Component {
+class UpdateEvent extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);
-        this.createEvent = this.createEvent.bind(this);
-        this.getEvent = this.getEvent.bind(this);
+        this.updateEvent = this.updateEvent.bind(this);
+        this.onChangeVisibility = this.onChangeVisibility.bind(this);
         this.state = initialState;
     }
 
     componentDidMount() {
-        if (this.props.match.params.id) {
-            this.getEvent(this.props.match.params.id);
-        }
-    }
-
-    getEvent(id) {
-        EventService.getEventById(id)
-            .then(response => {
-                this.setState({
-                    title: response.data.title,
-                    description: response.data.description,
-                    category: response.data.category,
-                    venue: response.data.venue,
-                    locationPoint: response.data.locationPoint,
-                    startDate: response.data.startDate,
-                    endDate: response.data.endDate,
-                    imageUrl: response.data.imageUrl,
-                    visibility: response.data.visibility,
-                });
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-                this.setState({
-                    // submitted: false
-                });
-            });
+        this.getEvent(this.props.match.params.id);
     }
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    onChangeVisibility = (visibility) => {
+        this.setState({
+            visibility: visibility,
+        });
+    }
 
-    createEvent = (e) => {
-        e.preventDefault();
-        const token = AuthService.getCurrentUser();
-        const config = {
-            headers: { Authorization: `Bearer ${token.data.token}` }
-        };
-        const data = {
-            title: this.state.title,
-            description: this.state.description,
-            category: this.state.category,
-            venue: this.state.venue,
-            locationPoint: this.state.locationPoint,
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
-            imageUrl: this.state.imageUrl,
-            visibility: this.state.visibility
-        };
-        EventService.create(data, config)
+    getEvent(id) {
+        EventService.getEventById(id)
+            .then(response => {
+                this.setState({
+                    entityId: response.data.data.entityId,
+                    title: response.data.data.title,
+                    description: response.data.data.description,
+                    category: response.data.data.category,
+                    venue: response.data.data.venue,
+                    locationPoint: response.data.data.locationPoint,
+                    startDate: response.data.data.startDate,
+                    endDate: response.data.data.endDate,
+                    imageUrl: response.data.data.imageUrl,
+                    visibility: response.data.data.visibility,
+                    message: response.data.message,
+                    loading: true,
+                    success: true
+                });
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({
+                    loading: true,
+                    message: error.response.data.message,
+                    success: false
+                });
+            });
+    }
+
+    updateEvent = (visibility) => {
+        this.onChangeVisibility(visibility);
+        setTimeout(() => {
+            const data = {
+                entityId: this.state.entityId,
+                title: this.state.title,
+                description: this.state.description,
+                category: this.state.category,
+                venue: this.state.venue,
+                locationPoint: this.state.locationPoint,
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
+                imageUrl: this.state.imageUrl,
+                visibility: this.state.visibility
+            };
+            EventService.updateEvent(this.state.entityId, data)
+                .then((response) => {
+                    this.setState({
+                        loading: true,
+                        message: response.data.message,
+                        success: true
+                    });
+                    setTimeout(() => {
+                        this.props.history.push('/profile');
+                    }, 1200);
+                })
+                .catch((error) => {
+                    this.setState({
+                        loading: true,
+                        message: error.response.data.message,
+                        success: false
+                    });
+                });
+        }, 1200);
+    }
+
+    deleteUserEvent = (id) => {
+        EventService.delete(id)
             .then((response) => {
                 this.setState({
                     loading: true,
                     message: response.data.message,
-                    success: true
+                    success: false
                 });
                 setTimeout(() => {
                     this.props.history.push('/profile');
@@ -103,25 +132,6 @@ class NewEvent extends Component {
             });
     }
 
-    deleteUserEvent = (id) => {
-        EventService.delete(id)
-            .then(response => {
-                this.setState({
-                    loading: true,
-                    message: response.data.message,
-                    success: true
-                });
-            })
-            .catch((error) => {
-                this.setState({
-                    loading: true,
-                    message: error.response.data.message,
-                    success: false
-                });
-                console.log(error.response);
-            });
-    }
-
     render() {
         const image = "https://affinityhealthclinic.ca/wp-content/uploads/2017/07/Image-Placeholder.jpg";
         return (
@@ -129,19 +139,16 @@ class NewEvent extends Component {
                 <section id="intro" class="container" data-aos="zoom-out">
                     {this.state.loading ? (
                         <div class={`alert ${this.state.success ? "alert-success" : "alert-danger"}`} role="alert">
-                            {this.state.message} {this.state.success ? '' : <a href="/log-in" class="alert-link">Log In Here.</a>}
+                            {this.state.message}
                         </div>
                     ) : ('')}
                     <Card style={{ width: '100%', backgroundColor: "#06a17f31" }}>
                         <header class="section-header" style={{ marginTop: "5%" }}>
-                            <h3>Create New Event</h3>
+                            <h3>Update Event</h3>
                         </header>
-                        {/* <header class="section-header" style={{ marginTop: "5%" }}>
-                            <h3>Create New Event</h3>
-                        </header> */}
                         <Card.Body>
                             <div className="submit-form" style={{ textAlign: "left", color: "black" }}>
-                                <form onSubmit={(event) => this.createEvent(event)}>
+                                <form>
                                     <Row>
                                         <Col>
                                             <Image src={!this.state.imageUrl ? image : this.state.imageUrl} thumbnail style={{ border: "1", height: 300 }} />
@@ -162,11 +169,11 @@ class NewEvent extends Component {
                                             <div className="form-group">
                                                 <label htmlFor="startDate" >Start Date</label>
                                                 <input
-                                                    type="date"
+                                                    type="text"
                                                     className="form-control"
                                                     id="startDate"
                                                     required
-                                                    value={this.state.startDate}
+                                                    value={new Date(this.state.startDate).toDateString()}
                                                     onChange={this.onChange}
                                                     name="startDate"
                                                 />
@@ -222,7 +229,7 @@ class NewEvent extends Component {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="locationPoint" >Location Point</label>
+                                                <label htmlFor="locationPoint">Location Point</label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
@@ -234,35 +241,44 @@ class NewEvent extends Component {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="endDate" >End Date</label>
+                                                <label htmlFor="endDate">End Date</label>
                                                 <input
-                                                    type="date"
+                                                    type="text"
                                                     className="form-control"
                                                     id="endDate"
                                                     required
-                                                    value={this.state.endDate}
+                                                    value={new Date(this.state.endDate).toDateString()}
                                                     onChange={this.onChange}
                                                     name="endDate"
                                                 />
                                             </div>
-                                            <Row style={{ paddingTop: 35, justifyContent: "center" }}>
-                                                <div class="text-center">
-                                                    <a> <button class="main-btn" type="submit" onClick={() => (this.state.visibility = true)}>
-                                                        <RiSave2Fill
-                                                            size={25}
-                                                            style={{ textAlign: "center" }} />
-                                                    </button></a>
-                                                    {' '}
-                                                    <a><button class="main-btn" type="submit" onClick={() => (this.state.visibility = false)}>
-                                                        <RiDraftFill
-                                                            size={25}
-                                                            style={{ textAlign: "center" }} />
-                                                    </button></a>
-                                                </div>
-                                            </Row>
                                         </Col>
                                     </Row>
                                 </form>
+                                <Row style={{ paddingTop: 35, justifyContent: "center" }}>
+                                    <div class="text-center">
+                                        <a> <button class="main-btn" type="submit" onClick={() => this.updateEvent(true)}>
+                                            <RiSave2Fill
+                                                // onClick={() => this.deleteUserEvent(userEvents.entityId)}
+                                                size={25}
+                                                style={{ textAlign: "center" }} />
+                                        </button></a>
+                                        {' '}
+                                        <a><button class="main-btn" type="submit" onClick={() => this.updateEvent(false)}>
+                                            <RiDraftFill
+                                                size={25}
+                                                style={{ textAlign: "center" }} />
+                                        </button></a>
+                                        {' '}
+                                        <a><button class="main-btn" type="submit"
+                                            onClick={() => this.deleteUserEvent(this.state.entityId)}
+                                        >
+                                            <RiDeleteBin2Fill
+                                                size={25}
+                                                style={{ textAlign: "center" }} />
+                                        </button> </a>
+                                    </div>
+                                </Row>
                             </div>
                         </Card.Body>
                     </Card>
@@ -271,4 +287,4 @@ class NewEvent extends Component {
         );
     }
 }
-export default NewEvent
+export default UpdateEvent

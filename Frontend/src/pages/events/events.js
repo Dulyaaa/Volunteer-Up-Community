@@ -41,7 +41,6 @@ export default class Events extends Component {
     }
 
     searchEvents = () => {
-        console.log(this.state.searchEvents)
         EventService.searchEvents(this.state.searchEvents).then(res => {
             this.setState({
                 data: res.data.data.events

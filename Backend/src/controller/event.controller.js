@@ -232,12 +232,9 @@ const searchEvents = async (req, res) => {
         const searchKey = Object.keys(req.query)[0];
         const searchValue = Object.values(req.query)[0];
 
-        console.log("req.query", req)
-
         const { page, limit } = req.query;
         const { page: offset, limit: count } = preparePagination(page, limit);
 
-        // TODO: improve this one 
         if (!searchKey) {
             return await getAllEvents(req, res);
         }
@@ -285,6 +282,50 @@ const searchByCategory = async (category, offset, count) => {
     };
 };
 
+const updateEvent = async (req, res) => {
+    const eventDetails = await eventRepository.fetch(req.params.eventId)
+
+    try {
+        const {
+            title,
+            description,
+            category,
+            venue,
+            locationPoint,
+            startDate,
+            endDate,
+            imageUrl,
+            visibility
+        } = req.body;
+
+        eventDetails.title = title
+        eventDetails.description = description
+        eventDetails.category = category.toLowerCase()
+        eventDetails.venue = venue
+        eventDetails.locationPoint = locationPoint
+        eventDetails.startDate = startDate
+        eventDetails.endDate = endDate
+        eventDetails.imageUrl = imageUrl
+        eventDetails.updatedAt = new Date().toISOString()
+        eventDetails.visibility = visibility
+
+        const event = await eventRepository.save(eventDetails);
+
+        if (event) {
+            return res.status(201).send({
+                error: false,
+                message: 'Event successfully updated',
+                data: event,
+            });
+        }
+    } catch (error) {
+        return res.status(500).send({
+            error: true,
+            message: `Server error, please try again later. ${error}`,
+        });
+    }
+};
+
 export {
     createEvent,
     getAllEvents,
@@ -293,4 +334,5 @@ export {
     getEventsByUserId,
     getDraftEventsByUserId,
     searchEvents,
+    updateEvent
 };

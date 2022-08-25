@@ -29,12 +29,15 @@ class EventService {
         return http.get(`/api/v1/events/search?category=${data}`);
     }
 
-    // http://localhost:8080/api/v1/events/search?category=fourth
-
-
-    get(id) {
-        return http.get(`/boardingPlace/place/${id}`);
+    getEventById(id) {
+        return http.get(`/api/v1/events/${id}`);
     }
+
+    updateEvent(id, data) {
+        return http.put(`/api/v1/events/update/${id}`, data);
+    }
+
+
 
     findByPlace(placeCity) {
         return http.get(`/boardingPlace/search?placeCity=${placeCity}`);

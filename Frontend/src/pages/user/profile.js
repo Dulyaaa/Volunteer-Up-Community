@@ -1,40 +1,32 @@
 import React, { Component } from 'react';
-import { OverlayTrigger, Row, Col, Tooltip, Image } from 'react-bootstrap'
+import { Row, Col, Image } from 'react-bootstrap'
 import AuthService from '../../services/auth'
 import EventService from '../../services/event'
 import logo from '../../assets/logos.png'
 import NoData from '../../assets/nodata.png'
+import { RiDraftFill, RiSave2Fill, RiDeleteBack2Fill } from "react-icons/ri";
 
 const initialState = {
     userEvents: [],
     userDraftEvents: [],
     userDetails: {},
     token: "",
-    alert:""
+    alert: ""
 }
 
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.getUserEvents = this.getUserEvents.bind(this);
-        this.getUserDraftEvents = this.getUserDraftEvents.bind(this); 
-        this.getUserSession = this.getUserSession.bind(this);
-        this.logOut = this.logOut.bind(this); 
+        this.getUserDraftEvents = this.getUserDraftEvents.bind(this);
+        this.logOut = this.logOut.bind(this);
+        this.navigateUpdatePage = this.navigateUpdatePage.bind(this);
         this.state = initialState;
     }
 
     componentDidMount() {
         this.getUserEvents();
         this.getUserDraftEvents();
-        this.getUserSession();
-    }
-
-    getUserSession = () => {
-        const data = AuthService.getCurrentUser();
-        this.setState({
-            token: data.data.token,
-            userDetails: data.data.user
-        });
     }
 
     logOut = () => {
@@ -50,8 +42,13 @@ class Profile extends Component {
     }
 
     getUserEvents = () => {
+        const token = AuthService.getCurrentUser();
+        this.setState({
+            token: token.data.token,
+            userDetails: token.data.user
+        });
         const config = {
-            headers: { Authorization: `Bearer ${this.state.token}` }
+            headers: { Authorization: `Bearer ${token.data.token}` }
         };
         EventService.getByUser(config)
             .then(response => {
@@ -72,6 +69,10 @@ class Profile extends Component {
 
     getUserDraftEvents = () => {
         const token = AuthService.getCurrentUser();
+        this.setState({
+            token: token.data.token,
+            userDetails: token.data.user
+        });
         const config = {
             headers: { Authorization: `Bearer ${token.data.token}` }
         };
@@ -92,6 +93,11 @@ class Profile extends Component {
             });
     }
 
+    navigateUpdatePage(accId) {
+        // console.log("Accessory ID:", accId);
+        // window.location = `/update/${accId}`
+        this.props.history.push("/update/" + accId);
+    }
 
     render() {
         return (
@@ -141,9 +147,9 @@ class Profile extends Component {
                 </header>
                 <section id="intro" data-aos="zoom-out">
                     {this.state.alert ? (
-                    <div class={`alert ${"alert-success" }`} role="alert">
-                        {this.state.alert}
-                    </div>
+                        <div class={`alert ${"alert-success"}`} role="alert">
+                            {this.state.alert}
+                        </div>
                     ) : ('')
                     }
                     <Row>
@@ -166,21 +172,11 @@ class Profile extends Component {
                         {/* Post details */}
                         <Col sm={8}>
                             <div class="text-right">
-                                <OverlayTrigger
-                                    key="bottom"
-                                    placement="bottom"
-                                    overlay={
-                                        <Tooltip id="bottom">
-                                            Create New Event
-                                        </Tooltip>
-                                    }
-                                >
-                                    <a href='/new-event'>
-                                        <button class="main-btn" type="submit" >
-                                            +
-                                        </button>
-                                    </a>
-                                </OverlayTrigger>
+                                <a href='/new-event'>
+                                    <button class="main-btn" type="submit" >
+                                        +
+                                    </button>
+                                </a>
                             </div>
                             {/* Published Posts */}
                             <Col>
@@ -192,11 +188,20 @@ class Profile extends Component {
                                 </div>
                                 <div id="cards_landscape_wrap-2">
                                     <div class="row justify-content-center">
-                                        {this.state.userEvents < 0 ?
+                                        {this.state.userEvents.length === 0 ?
+                                            <div>
+                                                <Image src={NoData} thumbnail style={{ border: "none", height: 100 }} />
+                                                <header class="section-header">
+                                                    <p>No Publish Posts Yet</p>
+                                                </header>
+                                            </div>
+                                            :
                                             this.state.userEvents.map(
                                                 event =>
                                                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                                                        <div class="card-flyer">
+                                                        <div class="card-flyer"
+                                                            onClick={() => this.navigateUpdatePage(event.entityId)}
+                                                        >
                                                             <div class="text-box">
                                                                 <div class="image-box">
                                                                     <img src={event.imageUrl} alt="" />
@@ -209,12 +214,6 @@ class Profile extends Component {
                                                         </div>
                                                     </div>
                                             )
-                                            : <div>
-                                                <Image src={NoData} thumbnail style={{ border: "none", height: 100 }} />
-                                                <header class="section-header">
-                                                    <p>No Publish Posts Yet</p>
-                                                </header>
-                                            </div>
                                         }
                                     </div>
                                 </div>
@@ -226,28 +225,32 @@ class Profile extends Component {
                                 </header>
                                 <div id="cards_landscape_wrap-2">
                                     <div class="row justify-content-center">
-                                        {this.state.userDraftEvents < 0 ? this.state.userDraftEvents.map(
-                                            event =>
-                                                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                                                    <div class="card-flyer">
-                                                        <div class="text-box">
-                                                            <div class="image-box">
-                                                                <img src={event.imageUrl} alt="" />
-                                                            </div>
-                                                            <div class="text-container">
-                                                                <h6>{event.title}</h6>
-                                                                <p>{event.description}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        )
-                                            : <div>
+                                        {this.state.userDraftEvents.length === 0 ?
+                                            <div>
                                                 <Image src={NoData} thumbnail style={{ border: "none", height: 100 }} />
                                                 <header class="section-header">
                                                     <p>No Draft Posts Yet</p>
                                                 </header>
                                             </div>
+                                            :
+                                            this.state.userDraftEvents.map(
+                                                event =>
+                                                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                                                        <div class="card-flyer"
+                                                            onClick={() => this.navigateUpdatePage(event.entityId)}
+                                                        >
+                                                            <div class="text-box">
+                                                                <div class="image-box">
+                                                                    <img src={event.imageUrl} alt="" />
+                                                                </div>
+                                                                <div class="text-container">
+                                                                    <h6>{event.title}</h6>
+                                                                    <p>{event.description}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            )
                                         }
                                     </div>
                                 </div>
