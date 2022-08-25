@@ -13,11 +13,11 @@ Showcases of final implementation of the system.
 <a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vuqbu0d6i571fynd0h3q.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vuqbu0d6i571fynd0h3q.png" width="100%" height="auto"></a>
 <a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/w6ehuvxqc1a3b95x4s39.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/w6ehuvxqc1a3b95x4s39.png" width="50%" height="auto"></a><a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/gn1y2slpj5txaugywqxq.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/gn1y2slpj5txaugywqxq.png" width="50%" height="auto"></a>
 
-# Overview video
+<!-- # Overview video
 
 Here's a short video that explains the project and how it uses Redis:
 
-[![Watch the video on YouTube](https://github.com/redis-developer/basic-analytics-dashboard-redis-bitmaps-nodejs/blob/cb8c2178a6c5a019c42aa91739ad9bfdbb2d558c/docs/YTThumbnail.png)](https://www.youtube.com/watch?v=Ugym4yUeIhA)
+[![Watch the video on YouTube](https://github.com/redis-developer/basic-analytics-dashboard-redis-bitmaps-nodejs/blob/cb8c2178a6c5a019c42aa91739ad9bfdbb2d558c/docs/YTThumbnail.png)](https://www.youtube.com/watch?v=Ugym4yUeIhA) -->
 
 ## How it works
 ### How the data is stored:
