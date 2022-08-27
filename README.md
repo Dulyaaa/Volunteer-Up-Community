@@ -10,9 +10,41 @@ This platform highlights the volunteer events one of the volunteers has organize
 
 Showcases of final implementation of the system.
 
-<a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vuqbu0d6i571fynd0h3q.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vuqbu0d6i571fynd0h3q.png" width="100%" height="auto"></a>
+<!-- <a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vuqbu0d6i571fynd0h3q.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vuqbu0d6i571fynd0h3q.png" width="100%" height="auto"></a>
 <a href="https://user-images.githubusercontent.com/57215584/186807215-92e4f92e-ebcd-4c2a-a4be-c5efb0a30a9b.png"><img src="https://user-images.githubusercontent.com/57215584/186807215-92e4f92e-ebcd-4c2a-a4be-c5efb0a30a9b.png" width="50%" height="auto"></a><a href="https://user-images.githubusercontent.com/57215584/186808105-aede870c-ba24-4727-99eb-86ba2dd3f2fc.png"><img src="https://user-images.githubusercontent.com/57215584/186808105-aede870c-ba24-4727-99eb-86ba2dd3f2fc.png" width="50%" height="auto"></a>
 <a href="https://user-images.githubusercontent.com/57215584/186808274-7fec4f00-1a55-4af0-935c-059344466e80.png"><img src="https://user-images.githubusercontent.com/57215584/186808274-7fec4f00-1a55-4af0-935c-059344466e80.png" width="50%" height="auto"></a><a href="https://user-images.githubusercontent.com/57215584/186808391-606d3c3c-a403-4898-9651-f5c1b69ebd3c.png"><img src="https://user-images.githubusercontent.com/57215584/186808391-606d3c3c-a403-4898-9651-f5c1b69ebd3c.png" width="50%" height="auto"></a>
+ -->
+
+**_Home Page_**
+>![HomePage](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vuqbu0d6i571fynd0h3q.png)
+
+**_All Events Page_**
+><a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/b2ed2hbuimbfu0uvl0km.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/b2ed2hbuimbfu0uvl0km.png" width="50%" height="auto"></a>
+
+**_Log In Page_**
+><a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7sfj5saq95u0zk9hz6yz.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/7sfj5saq95u0zk9hz6yz.png" width="50%" height="auto"></a>
+
+**_Sign Up Page_**
+><a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ek10rfedb1dwrlysemef.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ek10rfedb1dwrlysemef.png" width="50%" height="auto"></a>
+
+**_Profile Page_**
+><a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/w6ehuvxqc1a3b95x4s39.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/w6ehuvxqc1a3b95x4s39.png" width="50%" height="auto"></a>
+
+**_Create New Event Page_**
+><a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4tzyt54bb8odnkc700q8.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4tzyt54bb8odnkc700q8.png" width="50%" height="auto"></a>
+
+**_Update & Delete Event Page_**
+><a href="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3tylih9973e7if8iu4sc.png"><img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3tylih9973e7if8iu4sc.png" width="50%" height="auto"></a>
+
+#### Mern Architecture
+
+![MERN Architecture](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vhunlb7zvx1jx03ko490.png)
+
+#### High Level Architecture
+![High Level Architecture](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/536ngf4aizx0iepj7l19.png)
+
+
+
 
 <!-- # Overview video
 
