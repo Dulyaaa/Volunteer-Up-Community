@@ -1,9 +1,9 @@
 {
     "app_name": "Volunteer Up Community To Protect The World 🌏🙌",  //Name of the app
     "description": "Volunteering platform", // One line description
-    "hidden": false, // Can be "true" or "false". If true, this app won't show up in Launchpad.
-    "rank": 25, // This is used to sort the apps in the marketplace. 1 to 20 are reserved. Enter greater than 20
-    "type": "Building Block", //Can be "Building Block" or "Full App"
+    "hidden": true, // Can be "true" or "false". If true, this app won't show up in Launchpad.
+    "rank": 22, // This is used to sort the apps in the marketplace. 1 to 20 are reserved. Enter greater than 20
+    "type": "Full App", //Can be "Building Block" or "Full App"
     "contributed_by": "Redis Labs", // Can be "Redis Labs" or "Community" or "Partner"
     "repo_url": "https://github.com/Dulyaaa/Redis_Dev-Hackthon", //This is the Gitub Repo's URL.
     "download_url": "https://github.com/Dulyaaa/Redis_Dev-Hackthon/archive/refs/heads/master.zip",
