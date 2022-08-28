@@ -44,13 +44,11 @@ Showcases of final implementation of the system.
 ![High Level Architecture](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/536ngf4aizx0iepj7l19.png)
 
 
-
-
-<!-- # Overview video
+# Overview video
 
 Here's a short video that explains the project and how it uses Redis:
 
-[![Watch the video on YouTube](https://github.com/redis-developer/basic-analytics-dashboard-redis-bitmaps-nodejs/blob/cb8c2178a6c5a019c42aa91739ad9bfdbb2d558c/docs/YTThumbnail.png)](https://www.youtube.com/watch?v=Ugym4yUeIhA) -->
+[![Watch the video on YouTube](https://user-images.githubusercontent.com/57215584/187068277-db2e622e-fa37-410e-a84c-5c08d2bd3ce8.png)](https://www.youtube.com/watch?v=U0lHaCXKK-g&t=36s)
 
 ## How it works
 ### How the data is stored:
